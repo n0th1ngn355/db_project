@@ -1,0 +1,4 @@
+neomodel~=5.1.2
+django_neomodel
+djangorestframework~=3.14.0
+Django~=5.0.1
