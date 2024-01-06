@@ -1,0 +1,27 @@
+.whiteButton {
+    border-radius: 5px;
+    border-width: 0;
+    background: #ffffff;
+    color: #000000;
+    width: 516px;
+    height: 52px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 28px;
+    margin-bottom: 10px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+}
+.whiteButton:hover {
+    color: rgba(0, 0, 0, 0.7);
+    transition: color 0.2s ease-in-out;
+}
+.whiteButton:focus {
+    color: rgba(0, 0, 0, 0.4);
+    transition: color 0.2s ease-in-out;
+}
+.arrow {
+    margin-right: 6px;
+}

@@ -16,7 +16,7 @@ export default function Login() {
                     <Link className={styles.linkStyle} href={'/register'}>Зарегистрироваться</Link>
                 </div>
                 <div className={styles.pasRecLinkWrapper}>
-                    <Link className={styles.linkStyle} href={'/passwordRecover'}>Забыли Пароль?</Link>
+                    <Link className={styles.linkStyle} href={'/passwordRecoverHome'}>Забыли Пароль?</Link>
                 </div>
             </main>
         </>
