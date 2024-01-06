@@ -1,5 +1,5 @@
-import LoginTextbox from "@/app/register/components/LoginTextbox/LoginTextbox";
-import LoginButton from "@/app/register/components/LoginButton/LoginButton";
+import LoginTextbox from "@/app/components/LoginTextbox/LoginTextbox";
+import LoginButton from "@/app/components/LoginButton/LoginButton";
 import styles from './page.module.css'
 
 const h1_style = {
