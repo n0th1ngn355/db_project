@@ -15,9 +15,16 @@
     color: #171A1FFF;
     margin-bottom: 20px;
 }
-.linkWrapper {
+.pasRecLinkWrapper {
     display: flex;
     flex-direction: row;
+}
+.regLinkWrapper {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 25px;
+    right: 29px;
 }
 .textStyle {
     font-size: 14px;

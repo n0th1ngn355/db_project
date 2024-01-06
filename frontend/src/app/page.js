@@ -16,11 +16,11 @@ export default function Home() {
                     />
                 </div>
                 <div className={styles.textWrapper}>
-                    <h1 className={styles.h1Style}>Social Network Project</h1>
-                    <LoginButton text="Log In"></LoginButton>
+                    <h1 className={styles.h1Style}>Проект Социальная Сеть</h1>
+                    <LoginButton text="Войти"></LoginButton>
                     <div className={styles.linkWrapper}>
-                        <p className={styles.textStyle}>Don't have an account?</p>
-                        <Link className={styles.linkStyle} href="/register">Sign In</Link>
+                        <p className={styles.textStyle}>Нет аккаунта?</p>
+                        <Link className={styles.linkStyle} href="/register">Зарегистрироваться</Link>
                     </div>
                 </div>
             </main>

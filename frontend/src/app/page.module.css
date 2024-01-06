@@ -23,7 +23,6 @@
     background: #98B5BCFF;
 }
 .h1Style {
-    font-family: var(--font-lexend); /* Heading */
     font-size: 150px;
     font-weight: 400;
     line-height: 130px;
@@ -37,7 +36,6 @@
     flex-direction: row;
 }
 .textStyle {
-    font-family: var(--font-manrope); /* Body */
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;
@@ -48,7 +46,6 @@
     text-decoration: none;
     color: #607d84; /* white */
     margin-left: 5px;
-    font-family: var(--font-manrope); /* Body */
     font-size: 14px;
     font-weight: 400;
     line-height: 22px;

@@ -6,6 +6,7 @@ const main = {
     width: "100%",
     height: "100%",
 }
+
 const h1Style = {
     fontFamily: "var(--font-alfa-slab-one)",
     fontSize: "200px",
@@ -14,14 +15,15 @@ const h1Style = {
     color: "#6E98A2FF",
     margin: "0",
 }
+
 const pStyle = {
     fontFamily: "var(--font-manrope)", /* Body */
-    fontSize: "18px",
+    fontSize: "20px",
     fontWeight: "400",
     lineHeight: "28px",
     color: "#171A1FFF", /* neutral-900 */
     position: "relative",
-    bottom: "50px",
+    bottom: "30px",
 }
 
 export default function FourOhFour() {

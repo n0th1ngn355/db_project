@@ -3,12 +3,12 @@
     border-width: 0;
     background: #6e98a2;
     color: white;
-    width: 540px;
+    width: 516px;
     height: 52px;
     font-size: 16px;
     font-weight: 400;
     line-height: 26px;
-    font-family: var(--font-manrope);
+    margin-bottom: 10px;
 }
 .button:hover {
     background: #567d86;
