@@ -1,40 +1,70 @@
 from django.db import models
 
-# Create your models here.
-# models.py
-
-from neomodel import StructuredNode, StringProperty, DateTimeProperty, RelationshipTo
+from neomodel import StructuredNode, StringProperty, RelationshipTo, RelationshipFrom, UniqueIdProperty, DateTimeProperty
 
 
 class User(StructuredNode):
-    login = StringProperty(unique_index=True, required=True)
+    user_id = UniqueIdProperty(primary_key=True)
+    username = StringProperty(unique_index=True, required=True)
+    email = StringProperty(unique_index=True, required=True)
     password = StringProperty(required=True)
-    name = StringProperty()
-    profile_photo = StringProperty()
-    biography = StringProperty()
+    date_of_birth = DateTimeProperty()
+
+    # Relationships
+    follows = RelationshipTo('User', 'FOLLOWS')
+    has_skill = RelationshipTo('Skill', 'HAS_SKILL')
+    enrolled_in = RelationshipTo('Course', 'ENROLLED_IN')
+    teaches = RelationshipTo('Skill', 'TEACHES')
+    shared_resource = RelationshipTo('Resource', 'SHARED_RESOURCE')
+    posted = RelationshipTo('Post', 'POSTED')
+
+    def __str__(self):
+        return self.username
+
+
+class Skill(StructuredNode):
+    skill_id = UniqueIdProperty()
+    name = StringProperty(required=True)
+
+    # Relationships
+    belongs_to = RelationshipFrom('User', 'HAS_SKILL')
+
+    def __str__(self):
+        return self.name
+
+
+class Course(StructuredNode):
+    course_id = UniqueIdProperty()
+    title = StringProperty(required=True)
+    description = StringProperty()
+
+    # Relationships
+    enrolled_users = RelationshipFrom('User', 'ENROLLED_IN')
+    created_by = RelationshipTo('User', 'CREATED_BY')
+    completed_by = RelationshipFrom('User', 'COMPLETED')
+
+    def __str__(self):
+        return self.title
+
+
+class Resource(StructuredNode):
+    resource_id = UniqueIdProperty()
+    name = StringProperty(required=True)
+    url = StringProperty()
+
+    # Relationships
+    shared_by = RelationshipFrom('User', 'SHARED_RESOURCE')
+
+    def __str__(self):
+        return self.title
 
 
 class Post(StructuredNode):
-    text = StringProperty()
-    media_files = StringProperty()
-    timestamp = DateTimeProperty(default_now=True)
-    likes = RelationshipTo(User, 'LIKES')
-    comments = RelationshipTo(User, 'COMMENTED')
-    tags = StringProperty()
-
-
-class EducationalMaterial(StructuredNode):
+    post_id = UniqueIdProperty()
     title = StringProperty()
-    description = StringProperty()
-    media_files = StringProperty()
-    tags = StringProperty()
-    useful_count = RelationshipTo(User, 'USEFUL')
-    not_useful_count = RelationshipTo(User, 'NOT_USEFUL')
-    comments = RelationshipTo(User, 'COMMENTED')
+    content = StringProperty()
+    created_at = DateTimeProperty(default_now=True)
+    user = RelationshipFrom(User, 'POSTED')
 
-
-class LearningGroup(StructuredNode):
-    name = StringProperty()
-    description = StringProperty()
-    members = RelationshipTo(User, 'MEMBER_OF')
-    educational_materials = RelationshipTo(EducationalMaterial, 'GROUP_MATERIAL')
+def __str__(self):
+        return self.name
