@@ -1,19 +1,15 @@
 // layouts/MainLayout.js
 import React from 'react';
-import Sidebar from '@/app/profile/sidebar.js';
+import Sidebar from '@/app/components/Sidebar/sidebar';
 import 'bootstrap/dist/css/bootstrap.css'
 
-const MainLayout = ({ children }) => {
+const MainLayout = () => {
     return (
       <div className="container mt-5">
         <div className='row'>
           <Sidebar />
           <div className='col'>
-            <div>
-              <h2>User's Profile</h2>
-              <p>Welcome to the user's profile page. Explore the content below.</p>
-            </div>
-            {children}
+            /* ВОТ ТУТ ДЕЛАЕТЕ СУКА ЧЁ НАДО */
           </div>
         </div>
       </div>

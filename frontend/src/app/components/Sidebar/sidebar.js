@@ -1,7 +1,7 @@
 // components/Sidebar.js
 import React from 'react';
 import Link from 'next/link';
-import SidebarBlock from '@/app/components/sidebar_block/sidebar_block';
+import SidebarBlock from '@/app/components/SidebarBlock/sidebar_block';
 
 const Sidebar = () => {
     return (
