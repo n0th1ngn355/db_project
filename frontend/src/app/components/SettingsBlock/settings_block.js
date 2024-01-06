@@ -6,7 +6,7 @@ const SettingsBlock = () => {
     <a href="settings" className="settings-gear">
       <div className="overlap-group">
         <img className="img" alt="Vector" src="settings.svg" />
-        <span className="text-wrapper">Settings</span>
+        <span className="text-wrapper">Настройки</span>
       </div>
     </a>
   );
