@@ -1,14 +1,15 @@
 # urls.py
 
 from django.urls import path, include
-from rest_framework import routers
-from .views import UserViewSet, PostViewSet, EducationalMaterialViewSet, LearningGroupViewSet
+from rest_framework.routers import DefaultRouter
+from .views import UserViewSet, SkillViewSet, CourseViewSet, ResourceViewSet, PostViewSet
 
-router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
-router.register(r'posts', PostViewSet)
-router.register(r'educational-materials', EducationalMaterialViewSet)
-router.register(r'learning-groups', LearningGroupViewSet)
+router = DefaultRouter()
+router.register(r'users', UserViewSet, basename='user')
+router.register(r'skills', SkillViewSet, basename='skill')
+router.register(r'courses', CourseViewSet, basename='course')
+router.register(r'resources', ResourceViewSet, basename='resource')
+router.register(r'posts', PostViewSet, basename='posts')
 
 urlpatterns = [
     path('', include(router.urls)),
