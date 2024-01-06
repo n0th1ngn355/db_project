@@ -12,7 +12,7 @@ const Sidebar = ({ info }) => {
                 style={{ width: '100%', maxWidth: '200px', borderRadius: '50%' }}
             />
             <SidebarBlock info={info} href="feed" title="Feed" image="/feed.svg" />
-            <SidebarBlock info={info} href="friends" title="Friends" image="/friends.svg" />
+            <SidebarBlock info={info} href="follows" title="Follows" image="/follows.svg" />
             <SidebarBlock info={info} href="messages" title="Messages" image="/messages.svg" />
             <SidebarBlock info={info} href="profile" title="Profile" image="/profile.svg" />
             <SettingsBlock/>
