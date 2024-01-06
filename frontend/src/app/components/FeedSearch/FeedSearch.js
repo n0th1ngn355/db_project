@@ -1,17 +1,19 @@
 import Image from "next/image";
-import styles from './FeedSearch.css'
+import './FeedSearch.css'
 
 const FeedSearch = () => {
     return (
         <>
-            <div className={styles.searchWrapper}>
-                <label className={styles.searchIcon} htmlFor="search">
+            <div className="searchWrapper">
+                <label className="searchIcon" htmlFor="search">
                     <Image
                         src="/search.svg"
                         alt="search"
+                        width={20}
+                        height={20}
                     />
                 </label>
-                <input id="search" type="text" className={styles.search} placeholder="Поиск"/>
+                <input id="search" type="text" className="search" placeholder="Поиск"/>
             </div>
         </>
     );
