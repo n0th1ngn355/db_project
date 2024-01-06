@@ -9,3 +9,11 @@ body {
   overflow-x: hidden;
 }
 
+a, p {
+  font-family: var(--font-manrope);
+
+}
+h1, h2, h3 {
+  font-family: var(--font-lexend);
+}
+
