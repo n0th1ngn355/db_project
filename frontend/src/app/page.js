@@ -1,30 +1,29 @@
-import LoginTextbox from "@/app/components/LoginTextbox/LoginTextbox";
+import Image from "next/image";
+import Link from "next/link";
 import LoginButton from "@/app/components/LoginButton/LoginButton";
 import styles from './page.module.css'
 
-const h1_style = {
-    fontFamily: "var(--font-manrope)",
-    fontStyle: "normal",
-    fontSize: "32px",
-    fontWeight: "700",
-    lineHeight: "48px",
-    textAlign: "center",
-    color: "#171A1FFF",
-}
-
 export default function Home() {
-  return (
-      <>
-          <main className={styles.main}>
-              <h1 style={h1_style}>Create an account</h1>
-              <LoginTextbox type="text" label="First Name" placeholder="John"></LoginTextbox>
-              <LoginTextbox type="text" label="Second Name" placeholder="Doe"></LoginTextbox>
-              <LoginTextbox type="email" label="Email" placeholder="example.email@gmail.com"></LoginTextbox>
-              <LoginTextbox type="password" label="Password" placeholder="Enter at least 8+ characters"></LoginTextbox>
-              <LoginButton text="Sign In"></LoginButton>
-          </main>
-      </>
-  )
+    return (
+        <>
+            <main className={styles.main}>
+                <div className={styles.logoWrapper}>
+                    <Image
+                        src="../public/Soundwave 1.svg"
+                        width={500}
+                        height={500}
+                        alt="Logo"
+                    />
+                </div>
+                <div className={styles.textWrapper}>
+                    <h1 className={styles.h1Style}>Social Network Project</h1>
+                    <LoginButton text="Log In"></LoginButton>
+                    <div className={styles.linkWrapper}>
+                        <p className={styles.textStyle}>Don't have an account?</p>
+                        <Link className={styles.linkStyle} href="/register/page">Sign In</Link>
+                    </div>
+                </div>
+            </main>
+        </>
+    )
 }
-/* Create an account */
-

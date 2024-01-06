@@ -1,8 +1,55 @@
 .main {
     display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+.logoWrapper {
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 50%;
     height: 100%;
+    background: white;
+}
+.textWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 100%;
+    background: #98B5BCFF;
+}
+.h1Style {
+    font-family: var(--font-lexend); /* Heading */
+    font-size: 150px;
+    font-weight: 400;
+    line-height: 130px;
+    color: #FFFFFFFF; /* white */
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 0;
+}
+.linkWrapper {
+    display: flex;
+    flex-direction: row;
+}
+.textStyle {
+    font-family: var(--font-manrope); /* Body */
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #FFFFFFFF; /* white */
+    margin: 0;
+}
+.linkStyle {
+    text-decoration: none;
+    color: #607d84; /* white */
+    margin-left: 5px;
+    font-family: var(--font-manrope); /* Body */
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
 }
