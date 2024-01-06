@@ -9,7 +9,7 @@ export default function Home() {
             <main className={styles.main}>
                 <div className={styles.logoWrapper}>
                     <Image
-                        src="../public/Soundwave 1.svg"
+                        src="/logo.svg"
                         width={500}
                         height={500}
                         alt="Logo"
@@ -20,7 +20,7 @@ export default function Home() {
                     <LoginButton text="Log In"></LoginButton>
                     <div className={styles.linkWrapper}>
                         <p className={styles.textStyle}>Don't have an account?</p>
-                        <Link className={styles.linkStyle} href="/register/page">Sign In</Link>
+                        <Link className={styles.linkStyle} href="/register">Sign In</Link>
                     </div>
                 </div>
             </main>
