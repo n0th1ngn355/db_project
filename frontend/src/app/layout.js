@@ -1,9 +1,11 @@
 import { Manrope } from "next/font/google";
 import { Lexend } from "next/font/google";
+import { Alfa_Slab_One } from "next/font/google";
 import './globals.css'
 
 const manrope = Manrope({ subsets: ['latin', "cyrillic"], variable: '--font-manrope' })
 const lexend = Lexend({ subsets: ['latin'], variable: '--font-lexend' })
+const alfaSlabOne = Alfa_Slab_One({ subsets: ['latin'], variable: '--font-alfa-slab-one', weight: "400" }) // Исправленное название шрифта
 
 export const metadata = {
   title: 'Create Next App',
@@ -13,7 +15,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${manrope.className} ${lexend.className}`}>{children}</body>
+      <body className={`${manrope.variable} ${lexend.variable} ${alfaSlabOne.variable}`}>{children}</body>
     </html>
   )
 }
