@@ -1,12 +1,15 @@
+// components/SidebarBlock.js
 import React from 'react';
 import './sidebar_block.css';
 
-const SidebarBlock = ({ image, title }) => {
+const SidebarBlock = ({ href, image, title, info }) => {
   return (
-    <div className="sidebar-block">
-      <div className="text-wrapper">{title}</div>
+    <a href={href} className={`sidebar-block ${info == title ? 'active' : ''}`}>
       <img className="block-image" alt={title} src={image} />
-    </div>
+      <div className="text-wrapper">
+        <span className="text">{title}</span>
+      </div>
+    </a>
   );
 };
 

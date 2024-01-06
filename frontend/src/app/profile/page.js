@@ -7,9 +7,12 @@ const MainLayout = () => {
     return (
       <div className="container mt-5">
         <div className='row'>
-          <Sidebar />
+          <Sidebar info="Profile"/>
           <div className='col'>
-            /* ВОТ ТУТ ДЕЛАЕТЕ СУКА ЧЁ НАДО */
+            <div>
+              <h2>User's Profile</h2>
+              <p>Welcome to the user's profile page. Explore the content below.</p>
+            </div>
           </div>
         </div>
       </div>

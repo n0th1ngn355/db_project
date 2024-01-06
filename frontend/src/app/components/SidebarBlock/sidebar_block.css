@@ -1,17 +1,33 @@
+/* components/SidebarBlock.css */
 .sidebar-block {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin: 10px;
-    text-align: center;
-  }
-  
-  .text-wrapper {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .block-image {
-    width: 50px;
-    height: 50px;
-  }
-  
+  height: 40px;
+  margin-top: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.text-wrapper {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.text {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 14px;
+  font-weight: 400;
+  color: #6f7787;
+}
+
+.block-image {
+  padding-left:5px;
+  width: 25px;
+  height: 25px;
+}
+
+.active {
+  background-color: #f3f4f6;
+}
