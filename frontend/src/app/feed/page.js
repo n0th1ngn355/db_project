@@ -11,10 +11,10 @@ import './feed.css'
 
 const Feed = () => {
   return (
-    <div className="h-100 m-5">
-      <div className='row h-100 m-5'>
+    <div className="container mt-5">
+      <div className='row h-100'>
         <Sidebar info="feed"/>
-        <div className='col-6 mt-5'>
+        <div className='col-6 mt-3'>
             <FeedSearch className='row'/> 
             <div className='row mt-4 mb-3'>
                 <div className='col-3'>
@@ -54,7 +54,7 @@ const Feed = () => {
               </div>
             </div>
         </div>
-        <div className='col-3 mt-5'>
+        <div className='col mt-3'>
             <CreatePostButton text='Создать запись' className='row' />
             <div className='row mt-5'>
                 <div className='row mx-auto'>

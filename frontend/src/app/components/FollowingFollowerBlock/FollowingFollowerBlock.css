@@ -1,0 +1,58 @@
+.followBlock-link {
+    text-decoration: none;
+}
+.followBlock-container {
+    height: fit-content;
+    width: 100%;
+    background: #f5f5f5; /* neutral-150 */
+    border-radius: 4px; /* border-m */
+    padding: 14px 27px 14px 19px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.followBlock-name-wrapper, .followBlock-desc-wrapper {
+    overflow: hidden;
+}
+.followBlock-name {
+    font-size: 23px;
+    font-weight: 400;
+    color: #171A1FFF; /* neutral-900 */
+    width: 100%;
+    margin: 0;
+}
+.followBlock-desc-wrapper {
+    flex-grow: 1;
+}
+.followBlock-name-wrapper {
+    margin-right: 18px;
+}
+.followBlock-desc {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #171A1FFF; /* neutral-900 */
+    width: 100%;
+    margin: 0;
+}
+.followBlock-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.followBlock-info-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.followBlock-avatar-wrapper {
+    margin-right: 18px;
+}
+.followBlock-button {
+    border: none;
+    background: #f5f5f5;
+}

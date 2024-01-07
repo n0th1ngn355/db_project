@@ -7,11 +7,11 @@ const FollowingBlock = () => {
     <div className="following-block">
       <div className="row mt-5">
         <div className="title">
-            My following
+            Некоторые подписки
         </div>
-        <FollowingBlockPerson name="Biba Bobov"/>
-        <FollowingBlockPerson name="Marvin Merlin"/>
-        <FollowingBlockPerson name="Robert Howard"/>
+        <FollowingBlockPerson name="Биба Бобов"/>
+        <FollowingBlockPerson name="Марвин Мерлин"/>
+        <FollowingBlockPerson name="Роберт Ховард"/>
       </div>
     </div>
   );

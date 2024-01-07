@@ -1,0 +1,44 @@
+// Создание пользователей
+CREATE (user1:User {user_id: '1', name: 'Пользователь 1', email: 'user1@example.com', password: 'password1', date_of_birth: date('1990-01-01')})
+CREATE (user2:User {user_id: '2', name: 'Пользователь 2', email: 'user2@example.com', password: 'password2', date_of_birth: date('1995-01-01')})
+CREATE (user3:User {user_id: '3', name: 'Пользователь 3', email: 'user3@example.com', password: 'password3', date_of_birth: date('1985-01-01')})
+CREATE (user4:User {user_id: '4', name: 'Пользователь 4', email: 'user4@example.com', password: 'password4', date_of_birth: date('1992-01-01')})
+CREATE (user5:User {user_id: '5', name: 'Пользователь 5', email: 'user5@example.com', password: 'password5', date_of_birth: date('1988-01-01')})
+
+// Создание навыков
+CREATE (skill1:Skill {skill_id: '1', name: 'Python'})
+CREATE (skill2:Skill {skill_id: '2', name: 'Django'})
+CREATE (skill3:Skill {skill_id: '3', name: 'JavaScript'})
+
+// Создание курсов
+CREATE (course1:Course {course_id: '1', title: 'Курс 1', description: 'Описание курса 1'})
+CREATE (course2:Course {course_id: '2', title: 'Курс 2', description: 'Описание курса 2'})
+CREATE (course3:Course {course_id: '3', title: 'Курс 3', description: 'Описание курса 3'})
+
+// Создание ресурсов
+CREATE (resource1:Resource {resource_id: '1', name: 'Ресурс 1', url: 'http://example.com/resource1'})
+CREATE (resource2:Resource {resource_id: '2', name: 'Ресурс 2', url: 'http://example.com/resource2'})
+CREATE (resource3:Resource {resource_id: '3', name: 'Ресурс 3', url: 'http://example.com/resource3'})
+
+// Создание постов
+CREATE (post1:Post {post_id: '1', title: 'Заголовок поста 1', content: 'Содержание поста 1'})
+CREATE (post2:Post {post_id: '2', title: 'Заголовок поста 2', content: 'Содержание поста 2'})
+CREATE (post3:Post {post_id: '3', title: 'Заголовок поста 3', content: 'Содержание поста 3'})
+
+
+CREATE (user1)-[:FOLLOWS]->(user2)
+CREATE (user3)-[:FOLLOWS]->(user2)
+CREATE (user5)-[:FOLLOWS]->(user4)
+CREATE (user1)-[:HAS_SKILL]->(skill1)
+CREATE (user2)-[:HAS_SKILL]->(skill2)
+CREATE (user2)-[:ENROLLED_IN]->(course1)
+CREATE (user1)<-[:CREATED_BY]-(course1)
+CREATE (user5)<-[:CREATED_BY]-(course2)
+CREATE (user3)<-[:CREATED_BY]-(course3)
+CREATE (user1)-[:SHARED_RESOURCE]->(resource1)
+CREATE (user1)-[:SHARED_RESOURCE]->(resource2)
+CREATE (user1)-[:SHARED_RESOURCE]->(resource3)
+CREATE (user1)-[:POSTED]->(post1)
+CREATE (user2)-[:POSTED]->(post2)
+CREATE (user2)-[:POSTED]->(post3)
+CREATE (user1)-[:LIKED]->(post2)
