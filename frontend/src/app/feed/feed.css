@@ -2,7 +2,7 @@ body {
     margin: 0;
 }
 
-.btnMenu {
+.btn {
     border: 0;
     background-color: white;
     font-size: 14px; 
@@ -11,14 +11,11 @@ body {
     color: #565D6DFF;
 }
 
-.image {
-    border-radius: 8px;
+.scroll {
+    overflow-y: scroll;
+    width: 100%;
 }
 
-.name {
-    text-align: center;
-}
-
-.post {
-    border-radius: 10px;
+#scroll-feed::-webkit-scrollbar {
+    width: 0;
 }

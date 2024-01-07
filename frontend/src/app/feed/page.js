@@ -3,9 +3,9 @@ import React from 'react';
 import Sidebar from '@/app/components/Sidebar/sidebar';
 import FeedSearch from '../components/FeedSearch/FeedSearch';
 import CreatePostButton from '../components/CreatePostButton/CreatePostButton';
-import Image from "next/image";
+// import Image from "next/image";
 import Recomenendations from '../components/Recomendation/Recomentaion';
-// import Post from 
+import Post from '../components/Post/Post';
 import 'bootstrap/dist/css/bootstrap.css'
 import './feed.css'
 
@@ -18,40 +18,16 @@ const Feed = () => {
             <FeedSearch className='row'/> 
             <div className='row mt-4 mb-3'>
                 <div className='col-3'>
-                    <button className='btnMenu'>Отслеживаемые</button>
+                    <button className='btn'>Отслеживаемые</button>
                 </div>
                 <div className='col-2'>
-                    <button className='btnMenu'>Тренды</button>
+                    <button className='btn'>Тренды</button>
                 </div>
             </div>
-            <div className='row border h-50 mx-auto post'>
-              <div class="mb-5"> -----------------------Тут начинается
-                <div class="p-2 mt-3 row mx-auto">
-
-                  <div className='col-1'>
-                    <Image
-                      className='image'
-                      src="/user.svg"
-                      alt="search"
-                      width={45}
-                      height={45}
-                    />
-                  </div>
-                  <div className='col justify-content-center align-self-center'>
-                    <p className='m-0'>John Doe</p>
-                  </div>
-                  <div className='mt-2'>
-                    <p>
-                    Laborum enim esse magna enim incididunt aliqua ad officia fugiat ad aliquip aute laboris non non sunt. 
-                    Mollit Lorem est aliqua ipsum occaecat dolor eu nisi amet nostrud eu deserunt pariatur ut dolore. Veniam 
-                    est sit cillum ullamco ea voluptate proident. In fugiat officia pariatur enim culpa deserunt est incididunt nisi 
-                    ea enim.Est exercitation do enim tempor minim in ut magna ipsum reprehenderit fugiat nulla esse consectetur sint 
-                    ipsum. Culpa ea cillum pariatur sint sunt consequat amet ea in nostrud repr
-                    </p>
-                  </div>
-
-                </div>
-              </div>
+            <div id='scroll-feed' className='scroll'>
+              <Post></Post>
+              <Post></Post>
+              <Post></Post>
             </div>
         </div>
         <div className='col mt-3'>
