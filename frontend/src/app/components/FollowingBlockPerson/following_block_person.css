@@ -1,0 +1,16 @@
+.following-block-person {
+    display: flex;
+    align-items: center;
+  }
+  
+  .avatar-wrapper {
+    margin-right: 8px;
+  }
+  
+  .name-text {
+    font-size: 14px; 
+    font-weight: 400; 
+    line-height: 22px; 
+    color: #171A1FFF; /* neutral-900 */
+    margin: 0;
+  }

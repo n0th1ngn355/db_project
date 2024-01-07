@@ -33,7 +33,7 @@ const MainLayout = () => {
                 </div>
               </div>
             </div>
-            <hr className='my-4'/>
+            <hr className='my-5'/>
           </div>
         </div>
       </div>

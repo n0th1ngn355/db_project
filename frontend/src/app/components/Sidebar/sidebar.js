@@ -2,6 +2,7 @@
 import React from 'react';
 import SidebarBlock from '@/app/components/SidebarBlock/sidebar_block';
 import SettingsBlock from '@/app/components/SettingsBlock/settings_block';
+import FollowingBlock from '@/app/components/FollowingBlock/following_block';
 
 const Sidebar = ({ info }) => {
     return (
@@ -15,6 +16,7 @@ const Sidebar = ({ info }) => {
             <SidebarBlock info={info} href="follows" title="Подписки" image="/follows.svg" />
             <SidebarBlock info={info} href="messages" title="Сообщения" image="/messages.svg" />
             <SidebarBlock info={info} href="profile" title="Мой профиль" image="/profile.svg" />
+            <FollowingBlock/>
             <SettingsBlock/>
         </div>
     );
