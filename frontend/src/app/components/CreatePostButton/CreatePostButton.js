@@ -6,10 +6,12 @@ const CreatePostButton = ({ text }) => {
         <div>
             
             <button className="button">
-                <Image 
+                <Image
+                    className="create-post-button-image"
                     src='/CreatePostButton.svg'
                     width={24}
-                    height={24} style='margin-right: 10px'
+                    height={24}
+                    alt='createpost'
                 />
                 {text}
             </button>
