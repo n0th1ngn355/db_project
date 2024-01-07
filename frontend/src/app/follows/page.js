@@ -10,7 +10,7 @@ export default function Follows() {
             <div className="container mt-5">
                 <div className='row'>
                     <Sidebar info="follows"/>
-                    <div className='col mx-3'>
+                    <div className='col mx-3 mt-3'>
                         <div className="row">
                             <div className="col following">
                                 <div className="search-wrapper">
