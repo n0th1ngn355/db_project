@@ -7,11 +7,11 @@ import FollowingFollowerBlock from "@/app/components/FollowingFollowerBlock/Foll
 export default function Follows() {
     return (
         <>
-            <div className="container mt-5">
+            <div className="container my-5">
                 <div className='row'>
                     <Sidebar info="follows"/>
                     <div className='col mx-3'>
-                        <div className="row">
+                        <div className="row follows-containter">
                             <div className="col following">
                                 <div className="search-wrapper">
                                     <h1 className="title-style">Ваши подписки</h1>
@@ -30,6 +30,12 @@ export default function Follows() {
                                 </div>
                                 <div className="followers-list">
                                     <FollowingFollowerBlock name="Билл Клинтон"></FollowingFollowerBlock>
+                                    <FollowingFollowerBlock name="Николай Морозов"></FollowingFollowerBlock>
+                                    <FollowingFollowerBlock name="Бичуган Гагунов"></FollowingFollowerBlock>
+                                    <FollowingFollowerBlock name="Николай Морозов"></FollowingFollowerBlock>
+                                    <FollowingFollowerBlock name="Бичуган Гагунов"></FollowingFollowerBlock>
+                                    <FollowingFollowerBlock name="Николай Морозов"></FollowingFollowerBlock>
+                                    <FollowingFollowerBlock name="Бичуган Гагунов"></FollowingFollowerBlock>
                                     <FollowingFollowerBlock name="Николай Морозов"></FollowingFollowerBlock>
                                     <FollowingFollowerBlock name="Бичуган Гагунов"></FollowingFollowerBlock>
                                 </div>
