@@ -1,25 +1,28 @@
 from django.db import models
-
-from neomodel import StructuredNode, StringProperty, RelationshipTo, RelationshipFrom, UniqueIdProperty, DateTimeProperty
+from neomodel import DateProperty, StructuredNode, StringProperty, RelationshipTo, RelationshipFrom, UniqueIdProperty, DateTimeProperty
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
 
 
 class User(StructuredNode):
-    user_id = UniqueIdProperty(primary_key=True)
-    username = StringProperty(unique_index=True, required=True)
+    user_id = UniqueIdProperty()
+    name = StringProperty(required=True)
     email = StringProperty(unique_index=True, required=True)
     password = StringProperty(required=True)
-    date_of_birth = DateTimeProperty()
+    date_of_birth = DateProperty()
 
     # Relationships
     follows = RelationshipTo('User', 'FOLLOWS')
-    has_skill = RelationshipTo('Skill', 'HAS_SKILL')
+    skills = RelationshipTo('Skill', 'HAS_SKILL')
     enrolled_in = RelationshipTo('Course', 'ENROLLED_IN')
-    teaches = RelationshipTo('Skill', 'TEACHES')
+    completed = RelationshipTo('Course', 'COMPLETED')
     shared_resource = RelationshipTo('Resource', 'SHARED_RESOURCE')
     posted = RelationshipTo('Post', 'POSTED')
-
+    pliked = RelationshipTo('Post', 'LIKED')
+    cliked = RelationshipTo('Course', 'LIKED')
     def __str__(self):
-        return self.username
+        return self.name
 
 
 class Skill(StructuredNode):
@@ -42,7 +45,8 @@ class Course(StructuredNode):
     enrolled_users = RelationshipFrom('User', 'ENROLLED_IN')
     created_by = RelationshipTo('User', 'CREATED_BY')
     completed_by = RelationshipFrom('User', 'COMPLETED')
-
+    teaches = RelationshipTo('Skill', 'TEACHES')
+    liked = RelationshipFrom('User', 'LIKED')
     def __str__(self):
         return self.title
 
@@ -65,6 +69,7 @@ class Post(StructuredNode):
     content = StringProperty()
     created_at = DateTimeProperty(default_now=True)
     user = RelationshipFrom(User, 'POSTED')
+    liked = RelationshipFrom('User', 'LIKED')
 
 def __str__(self):
         return self.name
