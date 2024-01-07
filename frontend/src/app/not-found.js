@@ -31,7 +31,7 @@ export default function FourOhFour() {
         <>
             <main style={main}>
                 <h1 style={h1Style}>404</h1>
-                <p style={pStyle}>Looks like this page doesn't exist.</p>
+                <p style={pStyle}>Кажется такой страницы не существует.</p>
             </main>
         </>
     );
