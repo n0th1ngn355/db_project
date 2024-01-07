@@ -25,7 +25,7 @@ const Feed = () => {
                 </div>
             </div>
             <div className='row border h-50 mx-auto post'>
-              <div class="mb-5">
+              <div class="mb-5"> -----------------------Тут начинается
                 <div class="p-2 mt-3 row mx-auto">
 
                   <div className='col-1'>
