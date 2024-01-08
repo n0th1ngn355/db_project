@@ -28,7 +28,7 @@ export default function Messages() {
                                     <MessagesMessage type="interlocutor" message="Ишь чего захотел, без тебя не пойду никуда. Сам покажешь, что там 'никого не будет'"></MessagesMessage>
                                     <MessagesMessage type="interlocutor" message="Ты слышал, кстати, что скоро новая ГТА выйдет? Недавно трейлер выпустили." last={true} messageTime="12:05"></MessagesMessage>
                                     <MessagesMessage message="Нет, не слышал. Потом как-нибудь гляну."></MessagesMessage>
-                                    <MessagesMessage message="В общем, сходи потом с утра, потому что иначе я не принимаю твое мнение насчет бассейна." last={true} messageTime="12:01"></MessagesMessage>
+                                    <MessagesMessage message="В общем, сходи потом с утра, потому что иначе я не принимаю твое мнение насчет бассейна." last={true} messageTime="12:07"></MessagesMessage>
                                 </div>
                             </div>
                             <div className="chat-message-input">

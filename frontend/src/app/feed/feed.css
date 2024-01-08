@@ -1,21 +1,25 @@
-body {
-    margin: 0;
+.searchPost-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 9px;
 }
-
-.btn {
-    border: 0;
-    background-color: white;
-    font-size: 14px; 
-    font-weight: 700; 
-    line-height: 22px; 
-    color: #565D6DFF;
+.recommendations-title {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    color: #171A1FFF; /* neutral-900 */
 }
-
-.scroll {
+.feed {
+    height: 693px;
     overflow-y: scroll;
-    width: 100%;
+    scrollbar-width: thin; /* Толщина скроллбара (поддерживается в Firefox) */
+    scrollbar-color: transparent transparent; /* Цвет скроллбара (поддерживается в Firefox) */
+    -ms-overflow-style: none; /* Скрыть скроллбар в Internet Explorer и Edge */
 }
-
-#scroll-feed::-webkit-scrollbar {
-    width: 0;
+.feed::-webkit-scrollbar {
+    width: 0px; /* Толщина скроллбара (поддерживается в WebKit-браузерах) */
+}
+.feed::-webkit-scrollbar-thumb {
+    background-color: transparent; /* Цвет ползунка скроллбара (поддерживается в WebKit-браузерах) */
 }
