@@ -43,3 +43,17 @@
     -webkit-box-orient: vertical;
     line-height: 22px; 
 }
+
+.feed {
+    height: 693px;
+    overflow-y: scroll;
+    scrollbar-width: thin; /* Толщина скроллбара (поддерживается в Firefox) */
+    scrollbar-color: transparent transparent; /* Цвет скроллбара (поддерживается в Firefox) */
+    -ms-overflow-style: none; /* Скрыть скроллбар в Internet Explorer и Edge */
+}
+.feed::-webkit-scrollbar {
+    width: 0px; /* Толщина скроллбара (поддерживается в WebKit-браузерах) */
+}
+.feed::-webkit-scrollbar-thumb {
+    background-color: transparent; /* Цвет ползунка скроллбара (поддерживается в WebKit-браузерах) */
+}
