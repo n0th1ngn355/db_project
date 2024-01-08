@@ -1,9 +1,10 @@
 'use client'
-
+import 'bootstrap/dist/css/bootstrap.css'
 import Image from "next/image";
 import './Post.css'
 import { useState } from "react";
 import Link from "next/link";
+import MessagesInput from '../MessagesInput/MessagesInput';
 
 const Post = ({ name, text, postDayOrTime, initialLiked, likeAmount }) => {
   const [liked, setLiked] = useState(initialLiked);
@@ -38,6 +39,20 @@ const Post = ({ name, text, postDayOrTime, initialLiked, likeAmount }) => {
             <Image src="/share.svg" alt="share" width={24} height={25} />
             <p className="post-share-title">Поделиться</p>
           </button>
+        </div>
+        <div className='d-flex mt-4 '>
+          <div className="col-1 mt-1">
+            <Image src="/image.svg" alt="image" width={24} height={24} /> 
+          </div>
+          <div className="col-1 mt-1">
+            <Image src="/addFile.svg" alt="addFile" width={24} height={24} /> 
+          </div>
+          <div className="col-9"> 
+            <MessagesInput></MessagesInput>
+          </div>
+          <div className="col-1 mt-1 m-2">
+            <Image src="/addComment.svg" alt="addComment" width={24} height={24} /> 
+          </div>
         </div>
       </div>
     </div>
