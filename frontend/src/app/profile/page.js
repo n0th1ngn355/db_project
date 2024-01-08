@@ -1,15 +1,31 @@
-// layouts/MainLayout.js
+"use client";
+
 import React from 'react';
 import Sidebar from '@/app/components/Sidebar/sidebar';
 import Image from "next/image";
 import 'bootstrap/dist/css/bootstrap.css'
 import './profile.css'
+import { useEffect } from 'react';
+
+const getAuthToken = () => {
+  // Вернуть токен из куки или реализовать логику, которая подходит в вашем случае
+  return document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
+};
 
 const MainLayout = () => {
   const descriptionStyle = {
     marginLeft: '5px',
     marginRight: '30px'
   };
+
+  useEffect(() => {
+    const authToken = getAuthToken(); // Замените эту функцию на ваш способ получения токена из куки
+
+    // Если токен отсутствует, перенаправляем пользователя на страницу логина
+    if (!authToken) {
+        window.location.href = '/login';
+    }
+}, []);
 
   return (
     <div className="container mt-5">

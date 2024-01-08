@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 import LoginButton from "@/app/components/LoginButton/LoginButton";
 import LoginTextbox from "@/app/components/LoginTextbox/LoginTextbox";
 import Link from "next/link";
