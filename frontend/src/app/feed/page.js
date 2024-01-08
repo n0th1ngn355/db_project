@@ -29,16 +29,17 @@ const Feed = () => {
             </div>
         </div>
         <div className='col mt-3'>
-            <CreatePostButton text='Создать запись' className='row' />
-            <div className='row mt-5'>
+            <CreatePostButton text='Создать запись' className='row-1' />
+            <div className="row-1 my-3 recommendations-title-wrapper">
+                <p className='recommendations-title'>Рекомендации</p>
+            </div>
+            <div className='row-1'>
                 <div className='row mx-auto'>
-                    <p className='recommendations-title mb-3'>Рекомендации</p>
-                    <Recomenendations></Recomenendations>
-                    <Recomenendations></Recomenendations>
-                    <Recomenendations></Recomenendations>
+                    <Recomenendations name="Биба Бобов" text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi eum explicabo illum quibusdam quidem voluptatum!" likeAmount="67"></Recomenendations>
+                    <Recomenendations name="Володя Кислов" text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquam assumenda cum cumque cupiditate deleniti dolorem eligendi et libero modi mollitia officia, placeat quam qui quidem quod sed vel voluptate!" likeAmount="109"></Recomenendations>
+                    <Recomenendations name="Акакий Бобов" text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque aut fuga ipsa possimus quia sit veniam? Ab, cumque in minus nesciunt numquam officiis porro quasi. Ipsa nesciunt porro voluptas! Perspiciatis." likeAmount="209"></Recomenendations>
                 </div>
             </div>
-
         </div>
       </div>
     </div>
