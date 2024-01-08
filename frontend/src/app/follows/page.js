@@ -18,7 +18,7 @@ export default function Follows() {
                                     <FollowsSearch></FollowsSearch>
                                 </div>
                                 <div className="followings-list">
-                                    <FollowingFollowerBlock type="following" name="Билл Клинтон" desc="Я профессиональный c++ разраб наймите меня пж"></FollowingFollowerBlock>
+                                    <FollowingFollowerBlock type="following" name="Билл Клинтон" desc="Я профессиональный c++ разраб наймите меня пжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжжж"></FollowingFollowerBlock>
                                 </div>
                             </div>
                             <div className="col-4 followers">
@@ -31,6 +31,11 @@ export default function Follows() {
                                 <div className="followers-list">
                                     <FollowingFollowerBlock name="Билл Клинтон"></FollowingFollowerBlock>
                                     <FollowingFollowerBlock name="Николай Морозов"></FollowingFollowerBlock>
+                                    <FollowingFollowerBlock name="Джо Байден"></FollowingFollowerBlock>
+                                    <FollowingFollowerBlock name="Роберт Ховард"></FollowingFollowerBlock>
+                                    <FollowingFollowerBlock name="Марвин Мерлин"></FollowingFollowerBlock>
+                                    <FollowingFollowerBlock name="Григорий Пивоваров"></FollowingFollowerBlock>
+                                    <FollowingFollowerBlock name="Алексей Иванов"></FollowingFollowerBlock>
                                     <FollowingFollowerBlock name="Бичуган Гагунов"></FollowingFollowerBlock>
                                 </div>
                             </div>

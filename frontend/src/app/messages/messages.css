@@ -1,26 +1,88 @@
-.chat-content-header, .chat-content, .chat-message-enter{
-    box-shadow: 0px 0px 1px rgba(23, 26, 31, 0.2), 0px 0px 2px rgba(23, 26, 31, 0.15);
+.chat-content-header {
     padding: 24px 26px;
+    box-shadow: 0px 1px 1px rgba(23, 26, 31, 0.15);
+    height: 84px;
+}
+.chat-container, .chat-list-container {
+    padding: 0;
     border-radius: 4px;
+    box-shadow: 0px 0px 1px rgba(23, 26, 31, 0.2), 0px 0px 2px rgba(23, 26, 31, 0.15);
+    height: 800px;
 }
-.chat-user-info-wrapper {
+.chat-container {
+    margin-right: 5px;
     display: flex;
-    align-items: center;
-    width: 100%;
+    flex-direction: column;
 }
-.chat-user-name {
+.chat-list-container {
+    margin-left: 5px;
+    overflow: hidden;
+}
+.chat-list-title {
     font-size: 20px;
     line-height: 30px;
     color: #171A1FFF; /* neutral-900 */
     margin: 0;
-    margin-left: 18px;
+    text-align: center;
 }
-.chat-container, .chat-list-container {
+.chat-message-input {
+    display: flex;
+    flex-direction: row;
+    padding: 22px 18px;
+    box-shadow: 0px -1px 1px rgba(23, 26, 31, 0.15);
+}
+.chat-message-input-attach-buttons, .chat-message-input-send-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.chat-message-input-attach-buttons {
+    display: grid;
+    grid-column-gap: 18px;
+    grid-template-columns: repeat(2, auto);
+    margin: 0 18px 0 0;
+}
+.chat-message-input-send-button {
+    margin: 0 0 0 18px;
+}
+.chat-message-attach-button, .chat-message-send-button {
+    border: none;
+    background: white;
     padding: 0;
 }
-.chat-container {
-    margin-right: 5px;
+.chat-list-content {
+    height: 716px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    scrollbar-width: thin; /* Толщина скроллбара (поддерживается в Firefox) */
+    scrollbar-color: transparent transparent; /* Цвет скроллбара (поддерживается в Firefox) */
+    -ms-overflow-style: none; /* Скрыть скроллбар в Internet Explorer и Edge */
 }
-.chat-list-container {
-    margin-left: 5px;
+.chat-list-content::-webkit-scrollbar {
+    width: 5px; /* Толщина скроллбара (поддерживается в WebKit-браузерах) */
 }
+.chat-list-content::-webkit-scrollbar-thumb {
+    background-color: transparent; /* Цвет ползунка скроллбара (поддерживается в WebKit-браузерах) */
+}
+.chat-content-wrapper {
+    height: 100%;
+    padding: 24px 24px;
+}
+.chat-content {
+    display: flex;
+    flex-direction: column;
+    height: 586px;
+    overflow-y: scroll;
+    scrollbar-width: thin; /* Толщина скроллбара (поддерживается в Firefox) */
+    scrollbar-color: transparent transparent; /* Цвет скроллбара (поддерживается в Firefox) */
+    -ms-overflow-style: none; /* Скрыть скроллбар в Internet Explorer и Edge */
+}
+.chat-content::-webkit-scrollbar {
+    width: 5px; /* Толщина скроллбара (поддерживается в WebKit-браузерах) */
+}
+.chat-content::-webkit-scrollbar-thumb {
+    background-color: transparent; /* Цвет ползунка скроллбара (поддерживается в WebKit-браузерах) */
+}
+
+

@@ -1,0 +1,15 @@
+.chat-user-info-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.chat-user-name {
+    font-size: 20px;
+    line-height: 30px;
+    color: #171A1FFF; /* neutral-900 */
+    margin: 0;
+    margin-left: 18px;
+}
+.interlocutor-link {
+    text-decoration: none;
+}

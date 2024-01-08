@@ -11,12 +11,13 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 10px;
 }
 .followBlock-name-wrapper, .followBlock-desc-wrapper {
     overflow: hidden;
 }
 .followBlock-name {
-    font-size: 23px;
+    font-size: 20px;
     font-weight: 400;
     color: #171A1FFF; /* neutral-900 */
     width: 100%;
@@ -33,8 +34,11 @@
     font-weight: 400;
     line-height: 22px;
     color: #171A1FFF; /* neutral-900 */
-    width: 100%;
+    max-width: 485px;
     margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .followBlock-content {
     display: flex;
@@ -44,7 +48,7 @@
 }
 .followBlock-info-wrapper {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
     width: 100%;
     flex-wrap: wrap;

@@ -1,0 +1,25 @@
+.message-wrapper {
+    width: 45%;
+    background: #F3F4F6FF; /* neutral-200 */
+    border-radius: 4px; /* border-m */
+    padding: 12px 16px;
+    margin-bottom: 5px;
+}
+.message-container {
+    display: flex;
+    flex-direction: column;
+}
+.message-text {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #171A1FFF; /* neutral-900 */
+}
+.message-time {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #9095A1FF; /* neutral-500 */
+    margin: 0;
+}

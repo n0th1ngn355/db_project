@@ -12,8 +12,7 @@
     margin-right: 5px;
 }
 .title-style {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 18px;
     line-height: 36px;
     color: #171A1FFF; /* neutral-900 */
     margin: 0;
@@ -23,13 +22,13 @@
 }
 .followings-list, .followers-list {
     width: 100%;
-    display: grid;
-    grid-row-gap: 10px;
-    max-height: 645px;
+    display: flex;
+    flex-direction: column;
     overflow-y: scroll;
     scrollbar-width: thin; /* Толщина скроллбара (поддерживается в Firefox) */
     scrollbar-color: transparent transparent; /* Цвет скроллбара (поддерживается в Firefox) */
     -ms-overflow-style: none; /* Скрыть скроллбар в Internet Explorer и Edge */
+    height: 630px;
 }
 .followers-list::-webkit-scrollbar, .followings-list::-webkit-scrollbar {
     width: 5px; /* Толщина скроллбара (поддерживается в WebKit-браузерах) */
