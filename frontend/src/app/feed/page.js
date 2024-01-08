@@ -1,4 +1,5 @@
-// layouts/MainLayout.js
+"use client";
+
 import React from 'react';
 import Sidebar from '@/app/components/Sidebar/sidebar';
 import FeedSearch from '../components/FeedSearch/FeedSearch';
@@ -9,8 +10,24 @@ import Post from '../components/Post/Post';
 import 'bootstrap/dist/css/bootstrap.css'
 import './feed.css'
 import FeedPostsTypeButton from "@/app/components/FeedPostsTypeButton/FeedPostsTypeButton";
+import { useEffect } from 'react';
+
+const getAuthToken = () => {
+  // Вернуть токен из куки или реализовать логику, которая подходит в вашем случае
+  return document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
+};
 
 const Feed = () => {
+
+  useEffect(() => {
+    const authToken = getAuthToken(); // Замените эту функцию на ваш способ получения токена из куки
+
+    // Если токен отсутствует, перенаправляем пользователя на страницу логина
+    if (!authToken) {
+        window.location.href = '/login';
+    }
+}, []);
+
   return (
     <div className="container mt-5">
       <div className='row h-100'>
@@ -38,7 +55,7 @@ const Feed = () => {
                 <div className='row mx-auto'>
                     <Recomenendations name="Биба Бобов" text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi eum explicabo illum quibusdam quidem voluptatum!" likeAmount="67"></Recomenendations>
                     <Recomenendations name="Володя Кислов" text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aliquam assumenda cum cumque cupiditate deleniti dolorem eligendi et libero modi mollitia officia, placeat quam qui quidem quod sed vel voluptate!" likeAmount="109"></Recomenendations>
-                    <Recomenendations name="Акакий Бобов" text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque aut fuga ipsa possimus quia sit veniam? Ab, cumque in minus nesciunt numquam officiis porro quasi. Ipsa nesciunt porro voluptas! Perspiciatis." likeAmount="209"></Recomenendations>
+                    <Recomenendations name="Акакий Бобов" text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquam eum fuga in, nemo numquam quisquam ullam  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquam eum fuga in, nemo numquam quisquam ullam Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque aut fuga ipsa possimus quia sit veniam? Ab, cumque in minus nesciunt numquam officiis porro quasi. Ipsa nesciunt porro voluptas! Perspiciatis." likeAmount="209"></Recomenendations>
                 </div>
             </div>
 

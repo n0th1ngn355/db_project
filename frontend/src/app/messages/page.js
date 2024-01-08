@@ -1,3 +1,5 @@
+"use client";
+
 import Sidebar from "@/app/components/Sidebar/sidebar";
 import MessagesInput from "@/app/components/MessagesInput/MessagesInput";
 import MessagesMessage from "@/app/components/MessagesMessage/MessagesMessage";
@@ -6,9 +8,24 @@ import MessagesChatInfo from "@/app/components/MessagesChatInfo/MessagesChatInfo
 import Link from "next/link";
 import Image from "next/image";
 import './messages.css';
+import { useEffect } from 'react';
 
+const getAuthToken = () => {
+    // Вернуть токен из куки или реализовать логику, которая подходит в вашем случае
+    return document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
+  };
 
 export default function Messages() {
+
+    useEffect(() => {
+        const authToken = getAuthToken(); // Замените эту функцию на ваш способ получения токена из куки
+    
+        // Если токен отсутствует, перенаправляем пользователя на страницу логина
+        if (!authToken) {
+            window.location.href = '/login';
+        }
+    }, []);
+
     return (
         <div className="container my-5">
             <div className="row">
