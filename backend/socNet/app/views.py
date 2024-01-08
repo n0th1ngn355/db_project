@@ -13,6 +13,8 @@ from rest_framework.response import Response
 from neomodel import db
 from rest_framework.views import APIView
 from .models import User, Skill, Course, Resource, Post
+from django.contrib.auth.models import User as User1
+
 from .serializers import UserSerializer,  SkillSerializer, CourseSerializer, ResourceSerializer, PostSerializer
 
 def get_followers(user_instance):
@@ -21,6 +23,102 @@ def get_followers(user_instance):
 
     followers = [User.inflate(row[0]) for row in results]
     return followers
+
+class CLikeViewSet(APIView):
+    permission_classes = [IsAuthenticated]
+    queryset = User.nodes.all()
+    def get(self, request, *args, **kwargs):
+        try:
+            user = User.nodes.get(email=request.user.username)
+            courses = user.cliked
+            serializer = CourseSerializer(courses, many=True)
+            return Response(serializer.data)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    def post(self, request, *args, **kwargs):
+        try:
+            _id = request.data.get('course_id')
+            course = Course.nodes.get(course_id=_id)
+            user = User.nodes.get(email=request.user.username)
+            if not user.cliked.is_connected(course):
+                user.cliked.connect(course)
+                return Response({"detail": "success"},
+                                status=status.HTTP_201_CREATED)
+            else:
+                return Response({"detail": "Error"}, status=status.HTTP_400_BAD_REQUEST)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            _id = request.data.get('course_id')
+            course = Course.nodes.get(course_id=_id)
+            user = User.nodes.get(email=request.user.username)
+            if user.cliked.is_connected(course):
+                user.cliked.disconnect(course)
+                return Response({"detail": "success"},
+                                status=status.HTTP_201_CREATED)
+            else:
+                return Response({"detail": "Error"}, status=status.HTTP_400_BAD_REQUEST)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+class PLikeViewSet(APIView):
+    permission_classes = [IsAuthenticated]
+    queryset = User.nodes.all()
+    def get(self, request, *args, **kwargs):
+        try:
+            user = User.nodes.get(email=request.user.username)
+            posts = user.pliked
+            serializer = PostSerializer(posts, many=True)
+            return Response(serializer.data)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+
+    def post(self, request, *args, **kwargs):
+        try:
+            _id = request.data.get('post_id')
+            post = Post.nodes.get(post_id=_id)
+
+            user = User.nodes.get(email=request.user.username)
+            if not user.pliked.is_connected(post):
+                user.pliked.connect(post)
+                return Response({"detail": "success"},
+                                status=status.HTTP_201_CREATED)
+            else:
+                return Response({"detail": "Error"}, status=status.HTTP_400_BAD_REQUEST)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            _id = request.data.get('post_id')
+            post = Post.nodes.get(post_id=_id)
+
+            user = User.nodes.get(email=request.user.username)
+            if user.pliked.is_connected(post):
+                user.pliked.disconnect(post)
+                return Response({"detail": "success"},
+                                status=status.HTTP_201_CREATED)
+            else:
+                return Response({"detail": "Error"}, status=status.HTTP_400_BAD_REQUEST)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+
+class ProfileViewSet(APIView):
+    permission_classes = [IsAuthenticated]
+    queryset = User.nodes.all()
+    def get(self, request, *args, **kwargs):
+        try:
+            user = User.nodes.get(email=request.user.username)
+            serializer = UserSerializer(user)
+            return Response(serializer.data)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
 
 class FollowersViewSet(APIView):
@@ -124,6 +222,18 @@ class MySkillsViewSet(APIView):
         except User.DoesNotExist:
             return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
+class Costile(APIView):
+    def post(self, request):
+        res = []
+        for u in request.data:
+            if not User1.objects.filter(username=u['email']).exists():
+                u1 = User1.objects.create_user(u['email'], u['email'], u['password'])
+                u1.save()
+            else:
+                u1 = authenticate(request, username=u['email'], password=u['password'])
+            token, created = Token.objects.get_or_create(user=u1)
+            res.append(token.key)
+        return Response(res)
 
 
 class Login(APIView):
@@ -180,26 +290,26 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer.save()
         return Response(serializer.data)
 
-    # @action(detail=True, methods=['GET'])
-    # def follows(self, request, *args, **kwargs):
-    #     try:
-    #         user = User.nodes.get(user_id=kwargs.get('pk'))
-    #         follows = user.follows.all()
-    #         serializer = UserSerializer(follows, many=True)
-    #         return Response(serializer.data)
-    #     except User.DoesNotExist:
-    #         return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+    @action(detail=True, methods=['GET'])
+    def follows(self, request, *args, **kwargs):
+        try:
+            user = User.nodes.get(user_id=kwargs.get('pk'))
+            follows = user.follows.all()
+            serializer = UserSerializer(follows, many=True)
+            return Response(serializer.data)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
 
-    # @action(detail=True, methods=['GET'])
-    # def followers(self, request, *args, **kwargs):
-    #     try:
-    #         user = User.nodes.get(user_id=kwargs.get('pk'))
-    #         followers = get_followers(user)
-    #         serializer = UserSerializer(followers, many=True)
-    #         return Response(serializer.data)
-    #     except User.DoesNotExist:
-    #         return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+    @action(detail=True, methods=['GET'])
+    def followers(self, request, *args, **kwargs):
+        try:
+            user = User.nodes.get(user_id=kwargs.get('pk'))
+            followers = get_followers(user)
+            serializer = UserSerializer(followers, many=True)
+            return Response(serializer.data)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
     def retrieve(self, request, *args, **kwargs):
         try:

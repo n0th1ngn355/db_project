@@ -8,7 +8,6 @@ from django.contrib.auth.models import User as User1
 import json
 from neomodel import db
 
-
 def get_followers(user_instance):
     query = f"MATCH (follower:User)-[:FOLLOWS]->(:User {{user_id: '{user_instance.user_id}'}}) RETURN follower"
     results, meta = db.cypher_query(query)
