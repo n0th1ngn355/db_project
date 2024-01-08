@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import LoginButton from "@/app/components/LoginButton/LoginButton";
 import LoginTextbox from "@/app/components/LoginTextbox/LoginTextbox";
 import Link from "next/link";
@@ -9,11 +10,10 @@ import styles from './page.module.css'
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loginError, setLoginError] = useState(null);
 
     const handleLogin = async () => {
         try {
-            console.log(email)
-            console.log(password)
             const response = await fetch('http://localhost:8000/app/auth/', {
                 method: 'POST',
                 headers: {
@@ -31,24 +31,26 @@ export default function Login() {
                 if (data.token) {
                     // Успешный вход, сохраняем токен в куки
                     const expires = new Date();
-                    expires.setHours(expires.getHours() + 24); // Токен будет действителен 24 часа
+                    expires.setHours(expires.getHours() + 24);
 
                     document.cookie = `token=${data.token}; expires=${expires.toUTCString()}; path=/`;
 
-                    console.log('Успешный вход!');
+                    // Отображаем сообщение об успешном входе
+                    setLoginError('Успешный вход!');
+                    window.location.href = '/feed';
                 } else {
                     // Токен не вернулся, обработка ошибки
-                    console.error('Сервер не вернул токен');
+                    setLoginError('Сервер не вернул токен');
                 }
             } else {
                 // Обработка ошибок входа
-                console.error('Ошибка входа:', response.statusText);
+                setLoginError('Ошибка входа: ' + response.statusText);
             }
         } catch (error) {
-            console.error('Произошла ошибка:', error);
+            // Обработка других ошибок
+            setLoginError('Произошла ошибка: ' + error.message);
         }
     };
-
 
     return (
         <>
@@ -69,6 +71,11 @@ export default function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <LoginButton text="Войти" onClick={handleLogin}></LoginButton>
+                {loginError !== null && (
+                    <div id="error" className={`alert ${loginError.includes('Успешный вход') ? 'alert-success' : 'alert-danger'}`}>
+                        {loginError}
+                    </div>
+                )}
                 <div className={styles.regLinkWrapper}>
                     <p className={styles.textStyle}>Нет аккаунта?</p>
                     <Link className={styles.linkStyle} href={'/register'}>Зарегистрироваться</Link>
