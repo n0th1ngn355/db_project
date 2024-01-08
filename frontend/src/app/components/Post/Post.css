@@ -16,6 +16,15 @@
     justify-content: center;
     margin-left: 7px;
 }
+
+.post-user-title{
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 22px;
+    color: #171A1FFF; /* neutral-900 */
+    margin: 10;
+}
+
 .post-user-name {
     font-size: 14px;
     font-weight: 400;
@@ -69,4 +78,14 @@
     text-decoration: none;
     display: flex;
     flex-direction: row;
+}
+
+.center {
+    text-align: center;
+}
+
+.width-icons {
+    border: 0;
+    max-width: 65%;
+    background: 0;
 }

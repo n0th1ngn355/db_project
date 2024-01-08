@@ -1,11 +1,12 @@
 'use client'
-
+import 'bootstrap/dist/css/bootstrap.css'
 import Image from "next/image";
 import './Post.css'
 import { useState } from "react";
 import Link from "next/link";
+import MessagesInput from '../MessagesInput/MessagesInput';
 
-const Post = ({ name, text, postDayOrTime, initialLiked, likeAmount }) => {
+const Post = ({ name, title, text, postDayOrTime, initialLiked, likeAmount }) => {
   const [liked, setLiked] = useState(initialLiked);
 
   const handleLikeClick = () => {
@@ -26,6 +27,7 @@ const Post = ({ name, text, postDayOrTime, initialLiked, likeAmount }) => {
           </Link>
         </div>
         <div className="post-content">
+        <h2 className="post-user-title">{title}</h2>
           <p className="post-text">{text}</p>
           <p className="post-time">{postDayOrTime}</p>
         </div>
@@ -37,6 +39,26 @@ const Post = ({ name, text, postDayOrTime, initialLiked, likeAmount }) => {
           <button className="post-share">
             <Image src="/share.svg" alt="share" width={24} height={25} />
             <p className="post-share-title">Поделиться</p>
+          </button>
+        </div>
+        <div className='d-flex mt-4 center'>
+          <button  className="col mt-1 width-icons">
+            <div>
+              <Image src="/image.svg" alt="image" width={24} height={24} /> 
+            </div>
+          </button>
+          <button className="col mt-1 width-icons">
+            <div >
+              <Image src="/addFile.svg" alt="addFile" width={24} height={24} /> 
+            </div>
+          </button>
+          <div className="col-9"> 
+            <MessagesInput></MessagesInput>
+          </div>
+          <button className="col-1 mt-1 width-icons">
+            <div >
+              <Image src="/addComment.svg" alt="addComment" width={24} height={24} /> 
+            </div>
           </button>
         </div>
       </div>

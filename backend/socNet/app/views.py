@@ -24,6 +24,20 @@ def get_followers(user_instance):
     followers = [User.inflate(row[0]) for row in results]
     return followers
 
+
+class MyPosts(APIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Post.nodes.all()
+
+    def get(self, request, *args, **kwargs):
+        try:
+            user = User.nodes.get(email=request.user.username)
+            posts = user.posted
+            serializer = PostSerializer(posts, many=True)
+            return Response(serializer.data)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
 class CLikeViewSet(APIView):
     permission_classes = [IsAuthenticated]
     queryset = User.nodes.all()
