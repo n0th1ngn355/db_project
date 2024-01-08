@@ -12,13 +12,15 @@ export default function Login() {
 
     const handleLogin = async () => {
         try {
+            console.log(email)
+            console.log(password)
             const response = await fetch('http://localhost:8000/app/auth/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email: email,
+                    username: email,
                     password: password,
                 }),
             });
