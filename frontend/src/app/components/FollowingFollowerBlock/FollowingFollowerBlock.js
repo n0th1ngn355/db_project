@@ -32,9 +32,7 @@ const FollowingFollowerBlock = ({ type, name, desc }) => {
                 {type === 'following' && (
                     <div className="followBlock-button-wrapper">
                         <>
-                            <button className="followBlock-button">
-                                <Image src="/addfollow.svg" alt="addfollow" width={24} height={24}/>
-                            </button>
+                            
                         </>
                     </div>
                 )}
