@@ -12,6 +12,8 @@ export default function Login() {
 
     const handleLogin = async () => {
         try {
+            console.log(email)
+            console.log(password)
             console.log('логин: ' + email, 'пароль: ' + password);
             const response = await fetch('http://localhost:8000/app/auth/', {
                 method: 'POST',

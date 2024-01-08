@@ -1,20 +1,58 @@
-.text-recom {
-    font-size: 14px; 
-    font-weight: 400; 
-    line-height: 22px; 
-    margin-bottom: 15px;
-    color: #171A1FFF;
+.postRecommendation-post-text {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #171A1FFF; /* neutral-900 */
+    margin: 0;
 }
-
-.recom-title {
+.recommendations-title {
     text-align: center;
     font-size: 24px; 
     font-weight: 400; 
     line-height: 26px; 
     color: #171A1FFF;
+    margin: 0;
 }
-
-.image {
-    border-radius: 8px;
+.postRecommendation-container {
+    border-radius: 4px;
+    padding: 24px;
+    max-height: 150px;
 }
-
+.postRecommendation-post-link {
+    text-decoration: none;
+    color: inherit; /* Наследует цвет текста от родительского элемента */
+    padding: 0 !important;
+}
+.postRecommendation-content {
+    padding: 0 !important;
+}
+.postRecommendation-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.postRecommendation-user-name {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
+    color: #171A1FFF; /* neutral-900 */
+    margin: 0;
+    margin-right: 10px;
+}
+.postRecommendation-post-text {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #171A1FFF; /* neutral-900 */
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.postRecommendation-like-amount {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #171A1FFF; /* neutral-900 */
+    margin: 0;
+    margin-left: 3px;
+}
