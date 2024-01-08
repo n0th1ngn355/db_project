@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-pdn)aby2&ap5%2%!2kj00hraa%d2=cs!)3d1z5d#c2=^w15&(d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-NEOMODEL_NEO4J_BOLT_URL = os.environ.get('NEO4J_BOLT_URL', 'bolt://neo4j:3c4mgrxBZdJymVv@localhost:7687')
+NEOMODEL_NEO4J_BOLT_URL = os.environ.get('NEO4J_BOLT_URL', 'bolt://neo4j:12345678@localhost:7687')
 
 # Application definition
 
