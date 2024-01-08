@@ -1,21 +1,12 @@
-body {
-    margin: 0;
+.searchPost-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 9px;
 }
-
-.btn {
-    border: 0;
-    background-color: white;
-    font-size: 14px; 
-    font-weight: 700; 
-    line-height: 22px; 
-    color: #565D6DFF;
-}
-
-.scroll {
-    overflow-y: scroll;
-    width: 100%;
-}
-
-#scroll-feed::-webkit-scrollbar {
-    width: 0;
+.recommendations-title {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    color: #171A1FFF; /* neutral-900 */
 }
