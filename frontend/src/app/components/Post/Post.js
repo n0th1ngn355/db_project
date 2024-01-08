@@ -41,14 +41,14 @@ const Post = ({ name, info }) => {
                         height={100}
                       />
                     </div>
-                    {/*<div className='col'> */}
-                    {/*  <div className='row-1 mt-1'>*/}
-                    {/*    ChatGPT на JAVA. Пишем "Hello Wolrd" на Spring*/}
-                    {/*  </div>*/}
-                    {/*  <div className='row-1 mt-3'>*/}
-                    {/*    <a href='https://habr.com/ru/articles/784128/'>https://habr.com/ru/articles/784128/</a>*/}
-                    {/*  </div>*/}
-                    {/*</div>*/}
+                    <div className='col'> 
+                      <div className='row-1 mt-1'>
+                        ChatGPT на JAVA. Пишем "Hello Wolrd" на Spring
+                      </div>
+                      <div className='row-1 mt-3'>
+                        <a href='https://habr.com/ru/articles/784128/'>https://habr.com/ru/articles/784128/</a>
+                      </div>
+                    </div>
                   </div>
                   <div className='row mt-4'>
                     <div className='d-flex col-2'>
