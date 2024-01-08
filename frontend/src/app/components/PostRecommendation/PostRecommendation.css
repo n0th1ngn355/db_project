@@ -22,6 +22,7 @@
     text-decoration: none;
     color: inherit; /* Наследует цвет текста от родительского элемента */
     padding: 0 !important;
+    max-height: 150px;
 }
 .postRecommendation-content {
     padding: 0 !important;
@@ -57,4 +58,12 @@
     color: #171A1FFF; /* neutral-900 */
     margin: 0;
     margin-left: 3px;
+}
+.postRecommendation-like-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.postRecommendation-post-text-wrapper {
+
 }

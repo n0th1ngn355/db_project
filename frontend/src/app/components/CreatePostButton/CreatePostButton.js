@@ -1,11 +1,11 @@
 import './CreatePostButton.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Image from "next/image";
 
-const CreatePostButton = ({ text }) => {
+const CreatePostButton = ({ text, onClick }) => {
     return (
         <div>
-            
-            <button className="button">
+            <button onClick={onClick} className="button">
                 <Image
                     className="create-post-button-image"
                     src='/CreatePostButton.svg'
