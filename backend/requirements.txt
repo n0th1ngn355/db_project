@@ -3,3 +3,4 @@ neo4j==5.12.0
 django_neomodel
 djangorestframework~=3.14.0
 Django~=5.0.1
+django-cors-headers
