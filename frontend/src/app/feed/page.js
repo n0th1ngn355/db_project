@@ -4,7 +4,7 @@ import React from 'react';
 import Sidebar from '@/app/components/Sidebar/sidebar';
 import FeedSearch from '../components/FeedSearch/FeedSearch';
 import CreatePostButton from '../components/CreatePostButton/CreatePostButton';
-// import Image from "next/image";
+import Image from "next/image";
 import Recomenendations from '@/app/components/PostRecommendation/PostRecommendation';
 import Post from '../components/Post/Post';
 import 'bootstrap/dist/css/bootstrap.css'
@@ -18,9 +18,12 @@ const getAuthToken = () => {
 };
 
 const Feed = () => {
-
+  const [showModal, setShowModal] = useState(false);
   const [postsData, setPostsData] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
 
   useEffect(() => {
     const authToken = getAuthToken(); // Замените эту функцию на ваш способ получения токена из куки
@@ -52,7 +55,51 @@ const Feed = () => {
           console.error('Произошла ошибка при получении данных профиля:', error.message);
         });
     }
+
   }, []);
+
+  const handleCreatePost = async () => {
+    const authToken = getAuthToken(); // Предполагается, что у вас есть функция получения токена
+
+    try {
+      const response = await fetch('http://localhost:8000/app/posts/', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Token ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: title,
+          content: content,
+          created_at: new Date().toISOString(), // Текущее время в формате ISO
+        }),
+      });
+
+      if (response.ok) {
+        document.querySelector('.FeedCreatePostWindow-header-close-button').click();
+        location.reload();
+        console.log('Запись успешно создана');
+
+      } else {
+        throw new Error(`Ошибка сети: ${response.status} ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Произошла ошибка при создании записи:', error.message);
+    }
+  };
+
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const handleContainerClick = (e) => {
+    // Предотвратим закрытие модального окна при клике внутри контейнера
+    e.stopPropagation();
+  };
 
   return (
     <div className="container mt-5">
@@ -82,7 +129,7 @@ const Feed = () => {
           </div>
         </div>
         <div className='col mt-3'>
-          <CreatePostButton text='Создать запись' className='row-1' />
+          <CreatePostButton onClick={openModal} text="Создать пост"></CreatePostButton>
           <div className="row-1 my-3 recommendations-title-wrapper">
             <p className='recommendations-title'>Рекомендации</p>
           </div>
@@ -95,7 +142,49 @@ const Feed = () => {
           </div>
         </div>
       </div>
+      {showModal && (
+        <div onClick={closeModal} className="FeedCreatePostWindow-background">
+          <div onClick={handleContainerClick} className="FeedCreatePostWindow-container">
+            <div className="FeedCreatePostWindow-content">
+              <div className="FeedCreatePostWindow-header">
+                <div className="FeedCreatePostWindow-header-title-wrapper">
+                  <h2 className="FeedCreatePostWindow-header-title">Создать пост</h2>
+                </div>
+                <div className="FeedCreatePostWindow-header-close">
+                  <button onClick={closeModal} className="FeedCreatePostWindow-header-close-button">
+                    <Image src="/close.svg" alt="close" width={21} height={20} />
+                  </button>
+                </div>
+              </div>
+              <div className="input-text">
+                <input
+                  className="FeedCreatePostWindow-input"
+                  type="text"
+                  placeholder="Введите заголовок"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
+              <div className="input-area">
+                <textarea
+                  className="FeedCreatePostWindow-input"
+                  id="FeedCreatePostWindow-input"
+                  placeholder="Введите описание"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                ></textarea>
+              </div>
+              <div className="FeedCreatePostWindow-submit-button-wrapper">
+                <button className="FeedCreatePostWindow-submit-button" onClick={handleCreatePost}>
+                  Создать
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )};
     </div>
+
   );
 };
 
