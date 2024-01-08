@@ -40,7 +40,7 @@ const Post = ({ name, text, postDayOrTime, initialLiked, likeAmount }) => {
             <p className="post-share-title">Поделиться</p>
           </button>
         </div>
-        <div className='d-flex mt-4 '>
+        <div className='d-flex mt-4 center'>
           <div className="col-1 mt-1">
             <Image src="/image.svg" alt="image" width={24} height={24} /> 
           </div>
