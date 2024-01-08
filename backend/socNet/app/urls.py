@@ -24,4 +24,5 @@ urlpatterns = [
     path('post_likes/', PLikeViewSet.as_view(), name='pliked'),
     path('course_likes/', CLikeViewSet.as_view(), name='cliked'),
     path('costile/', Costile.as_view(), name='costile'),
+    path('myposts/', MyPosts.as_view(), name='posts')
 ]
