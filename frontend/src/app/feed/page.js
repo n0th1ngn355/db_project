@@ -10,12 +10,8 @@ import Post from '../components/Post/Post';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './feed.css'
 import FeedPostsTypeButton from "@/app/components/FeedPostsTypeButton/FeedPostsTypeButton";
-<<<<<<< HEAD
 import { useEffect, useState } from 'react';
 import Image from "next/image";
-=======
-import { useState, useEffect } from 'react';
->>>>>>> 3fd1551d13b7ec7211a6fa486622d1f41d3221e6
 
 const getAuthToken = () => {
   // Вернуть токен из куки или реализовать логику, которая подходит в вашем случае
@@ -24,8 +20,6 @@ const getAuthToken = () => {
 
 const Feed = () => {
     const [showModal, setShowModal] = useState(false);
-
-<<<<<<< HEAD
 
     useEffect(() => {
         const authToken = getAuthToken(); // Замените эту функцию на ваш способ получения токена из куки
@@ -125,7 +119,6 @@ const Feed = () => {
             )};
         </>
     );
-=======
   const [postsData, setPostsData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -206,7 +199,6 @@ const Feed = () => {
       </div>
     </div>
   );
->>>>>>> 3fd1551d13b7ec7211a6fa486622d1f41d3221e6
 };
 
 export default Feed;
