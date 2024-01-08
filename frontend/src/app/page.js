@@ -17,7 +17,7 @@ export default function Home() {
                 </div>
                 <div className={styles.textWrapper}>
                     <h1 className={styles.h1Style}>Проект Социальная Сеть</h1>
-                    <LoginButton text="Войти"></LoginButton>
+                    <LoginButton tag="a" href='/login' text="Войти"></LoginButton>
                     <div className={styles.linkWrapper}>
                         <p className={styles.textStyle}>Нет аккаунта?</p>
                         <Link className={styles.linkStyle} href="/register">Зарегистрироваться</Link>

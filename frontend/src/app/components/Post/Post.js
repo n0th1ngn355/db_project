@@ -3,7 +3,7 @@ import React from 'react';
 import Image from "next/image";
 import './Post.css'
 
-const Post = ({ info }) => {
+const Post = ({ name, info }) => {
     return (
         <div className='row border mx-auto post mb-5'>
               <div class="mb-3">
@@ -12,22 +12,18 @@ const Post = ({ info }) => {
                   <div className='col-1'>
                     <Image
                       className='image'
-                      src="/user.svg"
-                      alt="Пользователь"
+                      src="/avatar.svg"
+                      alt="avatar"
                       width={45}
                       height={45}
                     />
                   </div>
                   <div className='col justify-content-center align-self-center'>
-                    <p className='m-0'>John Doe</p>
+                    <p className='m-0'>{name}</p>
                   </div>
                   <div className='mt-2'>
                     <p>
-                    Laborum enim esse magna enim incididunt aliqua ad officia fugiat ad aliquip aute laboris non non sunt. 
-                    Mollit Lorem est aliqua ipsum occaecat dolor eu nisi amet nostrud eu deserunt pariatur ut dolore. Veniam 
-                    est sit cillum ullamco ea voluptate proident. In fugiat officia pariatur enim culpa deserunt est incididunt nisi 
-                    ea enim.Est exercitation do enim tempor minim in ut magna ipsum reprehenderit fugiat nulla esse consectetur sint 
-                    ipsum. Culpa ea cillum pariatur sint sunt consequat amet ea in nostrud repr
+                      {info}
                     </p>
                   </div>
 
@@ -45,16 +41,15 @@ const Post = ({ info }) => {
                         height={100}
                       />
                     </div>
-                    <div className='col'> 
-                      <div className='row-1 mt-1'>
-                        ChatGPT на JAVA. Пишем "Hello Wolrd" на Spring
-                      </div>
-                      <div className='row-1 mt-3'>
-                        <a href='https://habr.com/ru/articles/784128/'>https://habr.com/ru/articles/784128/</a>
-                      </div>
-                    </div>
+                    {/*<div className='col'> */}
+                    {/*  <div className='row-1 mt-1'>*/}
+                    {/*    ChatGPT на JAVA. Пишем "Hello Wolrd" на Spring*/}
+                    {/*  </div>*/}
+                    {/*  <div className='row-1 mt-3'>*/}
+                    {/*    <a href='https://habr.com/ru/articles/784128/'>https://habr.com/ru/articles/784128/</a>*/}
+                    {/*  </div>*/}
+                    {/*</div>*/}
                   </div>
-
                   <div className='row mt-4'>
                     <div className='d-flex col-2'>
                       <button className='btn'>
@@ -103,7 +98,6 @@ const Post = ({ info }) => {
                       </div>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>

@@ -31,7 +31,7 @@
     height: 630px;
 }
 .followers-list::-webkit-scrollbar, .followings-list::-webkit-scrollbar {
-    width: 5px; /* Толщина скроллбара (поддерживается в WebKit-браузерах) */
+    width: 0px; /* Толщина скроллбара (поддерживается в WebKit-браузерах) */
 }
 
 .followers-list::-webkit-scrollbar-thumb, .followings-list::-webkit-scrollbar-thumb {
