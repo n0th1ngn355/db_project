@@ -6,7 +6,7 @@ const LoginTextbox = ({type, label, placeholder, icon}) => {
         <>
             <div className="textbox-wrapper">
                 <label htmlFor="textbox">{label}</label>
-                <input id="textbox" type={type} className="textbox" placeholder={placeholder} required/>
+                <input id="textbox" name={name} type={type} className="textbox" placeholder={placeholder} required/>
             </div>
         </>
     );

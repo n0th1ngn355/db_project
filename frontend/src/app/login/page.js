@@ -12,13 +12,14 @@ export default function Login() {
 
     const handleLogin = async () => {
         try {
+            console.log('логин: ' + email, 'пароль: ' + password);
             const response = await fetch('http://localhost:8000/app/auth/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email: email,
+                    username: email,
                     password: password,
                 }),
             });
@@ -64,7 +65,7 @@ export default function Login() {
                     label="Пароль"
                     placeholder="Введите ваш пароль"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onClick={(e) => setPassword(password)}
                 />
                 <LoginButton text="Войти" onClick={handleLogin}></LoginButton>
                 <div className={styles.regLinkWrapper}>

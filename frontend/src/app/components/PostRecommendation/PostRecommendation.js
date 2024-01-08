@@ -1,9 +1,9 @@
 // components/Sidebar.js
 import React from 'react';
 import Image from "next/image";
-import './Recomendation.css'
+import './PostRecommendation.css'
 
-const Recomenendation = ({ info }) => {
+const PostRecommendation = ({ info }) => {
     return (
         <div className='row'>
             <div className='col-3'>
@@ -24,4 +24,4 @@ const Recomenendation = ({ info }) => {
     );
 };
 
-export default Recomenendation;
+export default PostRecommendation;
