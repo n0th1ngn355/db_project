@@ -152,7 +152,7 @@ class PostSerializer(serializers.Serializer):
     title = serializers.CharField()
     content = serializers.CharField()
     created_at = serializers.DateTimeField()
-    posted = serializers.CharField(source='User.user_id')
+    # posted = serializers.CharField(source='User.user_id')
 
     def to_representation(self, instance):
         return {
@@ -165,8 +165,10 @@ class PostSerializer(serializers.Serializer):
         }
 
     def create(self, validated_data):
+        user = User.nodes.get(email=self.context['request'].user.username)
         post = Post(**validated_data)
         post.save()
+        user.posted.connect(post)
         return post
 
     def update(self, instance, validated_data):
