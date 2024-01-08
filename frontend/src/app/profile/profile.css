@@ -18,7 +18,7 @@
 }
 
 .num_follow {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 28px;
     color: #171A1FFF;
@@ -26,7 +26,7 @@
 }
 
 .description_follow {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 28px;
     color: #171A1FFF;
@@ -34,7 +34,7 @@
 }
 
 .description {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
     line-height: 28px;
     overflow: hidden;

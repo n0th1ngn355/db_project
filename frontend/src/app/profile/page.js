@@ -1,32 +1,55 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '@/app/components/Sidebar/sidebar';
-import Image from "next/image";
-import 'bootstrap/dist/css/bootstrap.css'
-import './profile.css'
-import { useEffect } from 'react';
-
-const getAuthToken = () => {
-  // Вернуть токен из куки или реализовать логику, которая подходит в вашем случае
-  return document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
-};
+import Image from 'next/image';
+import 'bootstrap/dist/css/bootstrap.css';
+import './profile.css';
 import Post from '../components/Post/Post';
 
+const getAuthToken = () => {
+  return document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
+};
+
 const MainLayout = () => {
-  const descriptionStyle = {
-    marginLeft: '5px',
-    marginRight: '30px'
-  };
+  const [profileData, setProfileData] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const authToken = getAuthToken(); // Замените эту функцию на ваш способ получения токена из куки
+    const authToken = getAuthToken();
 
-    // Если токен отсутствует, перенаправляем пользователя на страницу логина
     if (!authToken) {
-        window.location.href = '/login';
+      window.location.href = '/login';
+    } else {
+      // Запрос на получение данных о профиле
+      fetch('http://localhost:8000/app/self/', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Token ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error(`Ошибка сети: ${response.status} ${response.statusText}`);
+          }
+        })
+        .then(data => {
+          setProfileData(data);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Произошла ошибка при получении данных профиля:', error.message);
+        });
     }
-}, []);
+  }, []);
+
+  const descriptionStyle = {
+    marginLeft: '5px',
+    marginRight: '30px',
+  };
 
   return (
     <div className="container mt-5">
@@ -36,28 +59,25 @@ const MainLayout = () => {
           <div>
             <div className="row mt-4 profile-info">
               <div className="avatar col-2">
-                <Image src="/avatar.svg" alt="Avatar" width={100} height={100}/>
+                <Image src="/avatar.svg" alt="Avatar" width={100} height={100} />
               </div>
               <div className="col">
-                <h2 className="name_block">Бабун Лимбов</h2>
+                <h2 className="name_block">{loading ? 'Loading...' : profileData.name}</h2>
                 <div className="d-flex">
-                  <label className="num_follow">200</label>
+                  <label className="num_follow">{loading ? '0' : (profileData.followers || '0')}</label>
                   <div className="description_follow" style={descriptionStyle}>Подписчики</div>
-                  <label className="num_follow">100</label>
+                  <label className="num_follow">{loading ? '0' : (profileData.following || '0')}</label>
                   <div className="description_follow" style={descriptionStyle}>Подписки</div>
                 </div>
-                <div className='mt-2 col description'>
-                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium cumque debitis deleniti eveniet fugiat fugit ipsa ipsum libero minima nemo, neque officiis pariatur possimus quas recusandae repellendus saepe soluta.
+                <div className='mt-3 col description'>
+                  {loading ? 'Loading...' : profileData.date_of_birth}
                 </div>
               </div>
             </div>
-            <hr className='my-4'/>
+            <hr className='my-4' />
           </div>
           <div className='feed'>
-            <Post name="Джером Кук" text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquam eum fuga in, nemo numquam quisquam ullam veniam vitae voluptate. Deleniti ducimus fugit hic mollitia officiis optio possimus temporibus, ullam!" postDayOrTime="12:00" likeAmount="54"></Post>
-            <Post name="Джером Кук" text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquam eum fuga in, nemo numquam quisquam ullam veniam vitae voluptate. Deleniti ducimus fugit hic mollitia officiis optio possimus temporibus, ullam!" postDayOrTime="12:00" likeAmount="54"></Post>
-            <Post name="Джером Кук" text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquam eum fuga in, nemo numquam quisquam ullam veniam vitae voluptate. Deleniti ducimus fugit hic mollitia officiis optio possimus temporibus, ullam!" postDayOrTime="12:00" likeAmount="54"></Post>
-            <Post name="Джером Кук" text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab aliquam eum fuga in, nemo numquam quisquam ullam veniam vitae voluptate. Deleniti ducimus fugit hic mollitia officiis optio possimus temporibus, ullam!" postDayOrTime="12:00" likeAmount="54"></Post>
+            {/* Ваш код для отображения постов */}
           </div>
         </div>
       </div>
