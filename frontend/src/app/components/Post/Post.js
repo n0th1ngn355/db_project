@@ -6,7 +6,7 @@ import { useState } from "react";
 import Link from "next/link";
 import MessagesInput from '../MessagesInput/MessagesInput';
 
-const Post = ({ name, text, postDayOrTime, initialLiked, likeAmount }) => {
+const Post = ({ name, title, text, postDayOrTime, initialLiked, likeAmount }) => {
   const [liked, setLiked] = useState(initialLiked);
 
   const handleLikeClick = () => {
@@ -27,6 +27,7 @@ const Post = ({ name, text, postDayOrTime, initialLiked, likeAmount }) => {
           </Link>
         </div>
         <div className="post-content">
+        <h2 className="post-user-title">{title}</h2>
           <p className="post-text">{text}</p>
           <p className="post-time">{postDayOrTime}</p>
         </div>

@@ -14,6 +14,7 @@ const getAuthToken = () => {
 const MainLayout = () => {
   const [profileData, setProfileData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [mypostsData, setMypostsData] = useState([]);
 
   useEffect(() => {
     const authToken = getAuthToken();
@@ -42,6 +43,27 @@ const MainLayout = () => {
         })
         .catch(error => {
           console.error('Произошла ошибка при получении данных профиля:', error.message);
+        });
+      fetch('http://localhost:8000/app/myposts/', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Token ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error(`Ошибка сети: ${response.status} ${response.statusText}`);
+          }
+        })
+        .then(data => {
+          setMypostsData(data);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Произошла ошибка при получении моих постов:', error.message);
         });
     }
   }, []);
@@ -77,7 +99,21 @@ const MainLayout = () => {
             <hr className='my-4' />
           </div>
           <div className='feed'>
-            {/* Ваш код для отображения постов */}
+            {loading ? (
+              <p>Loading...</p>
+            ) : (
+              mypostsData.map((post, index) => (
+                <Post
+                  key={index}
+                  name={profileData.name}
+                  title={post.title}
+                  text={post.content}
+                  postDayOrTime={post.created_at}
+                  initialLiked={post.initialLiked}
+                  likeAmount={post.liked}
+                />
+              ))
+            )}
           </div>
         </div>
       </div>
