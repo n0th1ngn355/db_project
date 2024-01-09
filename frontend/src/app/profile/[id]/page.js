@@ -6,6 +6,8 @@ import Image from 'next/image';
 import 'bootstrap/dist/css/bootstrap.css';
 import './profile.css';
 import Post from '../../components/Post/Post';
+import Loader from "@/app/components/Loader/Loader";
+import button from "bootstrap/js/src/button";
 
 const getAuthToken = () => {
   return document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
@@ -116,8 +118,22 @@ const MainLayout = ({params}) => {
                 <Image src="/avatar.svg" alt="Avatar" width={100} height={100} />
               </div>
               <div className="col">
-                <div className='row'>
-                  <h2 className="name_block col-6">{loading ? 'Loading...' : profileData.name} </h2>
+                <div className='profile-header'>
+                  <h2 className="name_block">{loading ? 'Loading...' : profileData.name} </h2>
+                  {!loading && (
+                    <>
+                      {!following && (
+                        <button className="followBlock-button" onClick={() => { follow(true); setFollowing(true) }}>
+                          <Image src="/profilefollow.svg" alt="follow" width={25} height={25} />
+                        </button>
+                      )}
+                      {following && (
+                        <button className="followBlock-button" onClick={() => { follow(false); setFollowing(false) }}>
+                          <Image src="/profileunfollow.svg" alt="unfollow" width={25} height={25} />
+                        </button>
+                      )}
+                    </>
+                  )}
                 </div>
                 <div className="d-flex">
                   <label className="num_follow">{loading ? '0' : (profileData.followers || '0')}</label>
@@ -128,27 +144,13 @@ const MainLayout = ({params}) => {
                 <div className='mt-3 col description'>
                   Навыки: {loading ? 'Loading...' : profileData.skills}
                 </div>
-                {!following && (
-                      <div className="followBlock-button-wrapper">
-                          <button className="followBlock-button" onClick={()=>{follow(true); setFollowing(true)}}>
-                              Подписаться
-                          </button>
-                    </div>
-                )}
-                {following && (
-                      <div className="followBlock-button-wrapper">
-                          <button className="followBlock-button" onClick={()=>{follow(false); setFollowing(false)}}>
-                            Отписаться
-                          </button>
-                    </div>
-                )}
               </div>
             </div>
             <hr className='my-4' />
           </div>
           <div className='feed'>
             {loading ? (
-              <p>Loading...</p>
+              <Loader/>
             ) : (
               mypostsData.map((post, index) => (
                 <Post

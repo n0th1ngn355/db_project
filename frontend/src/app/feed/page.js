@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import './feed.css'
 import FeedPostsTypeButton from "@/app/components/FeedPostsTypeButton/FeedPostsTypeButton";
 import { useState, useEffect } from 'react';
+import Loader from "@/app/components/Loader/Loader";
 
 const getAuthToken = () => {
   // Вернуть токен из куки или реализовать логику, которая подходит в вашем случае
@@ -144,7 +145,7 @@ const Feed = () => {
           </div>
           <div className='feed'>
             {loading ? (
-              <p>Loading...</p>
+              <Loader />
             ) : (
               (rec?recPostsData:postsData).map((post, index) => (
                 <Post
@@ -189,18 +190,21 @@ const Feed = () => {
                 </div>
               </div>
               <div className="input-text">
+                <label htmlFor="FeedCreatePostWindow-input-title">Заголовок</label>
                 <input
                   className="FeedCreatePostWindow-input"
                   type="text"
                   placeholder="Введите заголовок"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
+                  id="FeedCreatePostWindow-input-title"
                 />
               </div>
               <div className="input-area">
+                <label htmlFor="FeedCreatePostWindow-input-text">Описание</label>
                 <textarea
                   className="FeedCreatePostWindow-input"
-                  id="FeedCreatePostWindow-input"
+                  id="FeedCreatePostWindow-input-text"
                   placeholder="Введите описание"
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
