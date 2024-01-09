@@ -71,5 +71,5 @@ class Post(StructuredNode):
     user = RelationshipFrom(User, 'POSTED')
     liked = RelationshipFrom('User', 'LIKED')
 
-def __str__(self):
+    def __str__(self):
         return self.name
