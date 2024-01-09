@@ -182,7 +182,7 @@ const Feed = () => {
             </div>
           </div>
         </div>
-      )};
+      )}
     </div>
 
   );

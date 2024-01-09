@@ -88,7 +88,7 @@ const MainLayout = () => {
                 <div className="d-flex">
                   <label className="num_follow">{loading ? '0' : (profileData.followers || '0')}</label>
                   <div className="description_follow" style={descriptionStyle}>Подписчики</div>
-                  <label className="num_follow">{loading ? '0' : (profileData.following || '0')}</label>
+                  <label className="num_follow">{loading ? '0' : (profileData.follows || '0')}</label>
                   <div className="description_follow" style={descriptionStyle}>Подписки</div>
                 </div>
                 <div className='mt-3 col description'>
