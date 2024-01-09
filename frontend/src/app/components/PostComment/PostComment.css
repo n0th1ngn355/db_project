@@ -1,0 +1,34 @@
+.post-user-comment {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 6px;
+}
+.post-user-comment-avatar-wrapper {
+    margin-right: 7px;
+}
+.post-user-comment-name {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #171A1FFF; /* neutral-900 */
+    margin: 0;
+}
+.post-user-comment-text {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #171A1FFF; /* neutral-900 */
+    margin: 0;
+}
+
+.post-user-comment-time {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #BDC1CAFF; /* neutral-400 */
+    margin: 0;
+    width: 100%;
+    text-align: left;
+}
