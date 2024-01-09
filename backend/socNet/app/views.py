@@ -25,13 +25,29 @@ def get_followers(user_instance):
     return followers
 
 
-class MyPosts(APIView):
+class Others(APIView):
     permission_classes = [IsAuthenticated]
-    queryset = Post.nodes.all()
+    queryset = User.nodes.all()
 
     def get(self, request, *args, **kwargs):
         try:
             user = User.nodes.get(email=request.user.username)
+            others = filter(lambda x: x.user_id != user.user_id, User.nodes.all())
+            serializer = UserSerializer(others, many=True, context={'request': request})
+            return Response(serializer.data)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+class MyPosts(APIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Post.nodes.all()
+
+    def get(self, request, pk=None, *args, **kwargs):
+        try:
+            if pk:
+                user = User.nodes.get(user_id=pk)
+            else:
+                user = User.nodes.get(email=request.user.username)
             posts = user.posted
             serializer = PostSerializer(posts, many=True)
             return Response(serializer.data)
@@ -129,7 +145,20 @@ class ProfileViewSet(APIView):
     def get(self, request, *args, **kwargs):
         try:
             user = User.nodes.get(email=request.user.username)
-            serializer = UserSerializer(user)
+            serializer = UserSerializer(user, context={'request':request})
+            return Response(serializer.data)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+class EnrolledCourses(APIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Course.nodes.all()
+
+    def get(self, request, *args, **kwargs):
+        try:
+            user = User.nodes.get(email=request.user.username)
+            courses = user.enrolled_in.all()
+            serializer = CourseSerializer(courses, many=True)
             return Response(serializer.data)
         except User.DoesNotExist:
             return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
@@ -143,7 +172,7 @@ class FollowersViewSet(APIView):
         try:
             user = User.nodes.get(email=request.user.username)
             follows = get_followers(user)
-            serializer = UserSerializer(follows, many=True)
+            serializer = UserSerializer(follows, many=True, context={'request':request})
             return Response(serializer.data)
         except User.DoesNotExist:
             return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
@@ -157,7 +186,7 @@ class FollowsViewSet(APIView):
         try:
             user = User.nodes.get(email=request.user.username)
             follows = user.follows.all()
-            serializer = UserSerializer(follows, many=True)
+            serializer = UserSerializer(follows, many=True, context={'request':request})
             return Response(serializer.data)
         except User.DoesNotExist:
             return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
@@ -191,7 +220,21 @@ class FollowsViewSet(APIView):
         except User.DoesNotExist:
             return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
+class Feed(APIView):
+    permission_classes = [IsAuthenticated]
+    queryset = Post.nodes.all()
 
+    def get(self, request, *args, **kwargs):
+        try:
+            user = User.nodes.get(email=request.user.username)
+            follows = user.follows.all()
+            posts = []
+            for f in follows:
+                posts.extend(f.posted.all())
+            serializer = PostSerializer(posts, many=True)
+            return Response(serializer.data)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
 class MySkillsViewSet(APIView):
     permission_classes = [IsAuthenticated]
@@ -309,7 +352,7 @@ class UserViewSet(viewsets.ModelViewSet):
         try:
             user = User.nodes.get(user_id=kwargs.get('pk'))
             follows = user.follows.all()
-            serializer = UserSerializer(follows, many=True)
+            serializer = UserSerializer(follows, context={'request':request}, many=True)
             return Response(serializer.data)
         except User.DoesNotExist:
             return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
@@ -320,7 +363,7 @@ class UserViewSet(viewsets.ModelViewSet):
         try:
             user = User.nodes.get(user_id=kwargs.get('pk'))
             followers = get_followers(user)
-            serializer = UserSerializer(followers, many=True)
+            serializer = UserSerializer(followers, context={'request':request}, many=True)
             return Response(serializer.data)
         except User.DoesNotExist:
             return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
@@ -371,9 +414,6 @@ class CourseViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Course.nodes.all()
 
-    def perform_create(self, serializer):
-        user = User.nodes.get(email=self.request.user.username)
-        serializer.save(created_by=user)
     def update(self, request, *args, **kwargs):
         instance = Course.nodes.get(course_id=kwargs.get('pk'))
         serializer = self.serializer_class(instance, data=request.data, partial=True)

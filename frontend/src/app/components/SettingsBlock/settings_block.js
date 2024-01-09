@@ -3,9 +3,9 @@ import './settings_block.css';
 
 const SettingsBlock = () => {
   return (
-    <a href="settings" className="settings-gear">
+    <a href="/settings" className="settings-gear">
       <div className="overlap-group">
-        <img className="img" alt="Vector" src="settings.svg" />
+        <img className="img" alt="Vector" src="/settings.svg" />
         <span className="text-wrapper">Настройки</span>
       </div>
     </a>

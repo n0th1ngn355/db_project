@@ -1,0 +1,62 @@
+.followBlock-link {
+    text-decoration: none;
+}
+.followBlock-container {
+    height: fit-content;
+    width: 100%;
+    background: #f5f5f5; /* neutral-150 */
+    border-radius: 4px; /* border-m */
+    padding: 14px 27px 14px 19px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.followBlock-name-wrapper, .followBlock-desc-wrapper {
+    overflow: hidden;
+}
+.followBlock-name {
+    font-size: 20px;
+    font-weight: 400;
+    color: #171A1FFF; /* neutral-900 */
+    width: 100%;
+    margin: 0;
+}
+.followBlock-desc-wrapper {
+    flex-grow: 1;
+}
+.followBlock-name-wrapper {
+    margin-right: 18px;
+}
+.followBlock-desc {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #171A1FFF; /* neutral-900 */
+    max-width: 485px;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.followBlock-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.followBlock-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.followBlock-avatar-wrapper {
+    margin-right: 18px;
+}
+.followBlock-button {
+    border: none;
+    background: #f5f5f5;
+}

@@ -1,42 +1,30 @@
-.followers, .following {
-    border-radius: 4px;
-    box-shadow: 0px 0px 1px rgba(23, 26, 31, 0.2), 0px 0px 2px rgba(23, 26, 31, 0.15);
-    background-color: white;
-    padding: 35px 30px;
-    height: 800px;
-}
-.followers {
-    margin-left: 5px;
-}
-.following {
-    margin-right: 5px;
-}
-.title-style {
-    font-size: 18px;
-    line-height: 36px;
-    color: #171A1FFF; /* neutral-900 */
-    margin: 0;
-}
-.search-wrapper {
-    margin-bottom: 25px;
-}
-.followings-list, .followers-list {
-    width: 100%;
+.searchPost-buttons {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 9px;
+}
+.recommendations-title {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    color: #171A1FFF; /* neutral-900 */
+}
+.feed {
+    height: 693px;
     overflow-y: scroll;
     scrollbar-width: thin; /* Толщина скроллбара (поддерживается в Firefox) */
     scrollbar-color: transparent transparent; /* Цвет скроллбара (поддерживается в Firefox) */
     -ms-overflow-style: none; /* Скрыть скроллбар в Internet Explorer и Edge */
-    height: 630px;
 }
-.followers-list::-webkit-scrollbar, .followings-list::-webkit-scrollbar {
+.feed::-webkit-scrollbar {
     width: 0px; /* Толщина скроллбара (поддерживается в WebKit-браузерах) */
 }
-
-.followers-list::-webkit-scrollbar-thumb, .followings-list::-webkit-scrollbar-thumb {
+.feed::-webkit-scrollbar-thumb {
     background-color: transparent; /* Цвет ползунка скроллбара (поддерживается в WebKit-браузерах) */
 }
+
+
 
 
 

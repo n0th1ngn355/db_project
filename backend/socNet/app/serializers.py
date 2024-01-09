@@ -26,6 +26,7 @@ class UserSerializer(serializers.Serializer):
 
 
     def to_representation(self, instance):
+        me = User.nodes.get(email=self.context['request'].user.username)
         return {
             'user_id': str(instance.user_id),
             'name': instance.name,
@@ -33,7 +34,8 @@ class UserSerializer(serializers.Serializer):
             'date_of_birth': instance.date_of_birth,
             'skills': ', '.join(list(map(lambda x: str(x), instance.skills))),
             'follows': str(len(instance.follows)),
-            'followers': str(len(get_followers(instance)))
+            'followers': str(len(get_followers(instance))),
+            'isfollowing': str(me.follows.is_connected(instance))
         }
 
     def create(self, validated_data):
@@ -100,10 +102,10 @@ class CourseSerializer(serializers.Serializer):
         }
 
     def create(self, validated_data):
+        user = User.nodes.get(email=self.context['request'].user.username)
         course = Course(**validated_data)
-        u = User.nodes.get(user_id=validated_data['User']['user_id'])
         course.save()
-        course.created_by.connect(u)
+        course.created_by.connect(user)
         return course
 
     def update(self, instance, validated_data):

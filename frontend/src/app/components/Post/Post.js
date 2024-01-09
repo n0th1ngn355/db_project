@@ -6,7 +6,7 @@ import { useState } from "react";
 import Link from "next/link";
 import MessagesInput from '../MessagesInput/MessagesInput';
 
-const Post = ({ name, title, text, postDayOrTime, initialLiked, likeAmount }) => {
+const Post = ({ name, id, title, text, postDayOrTime, initialLiked, likeAmount }) => {
   const [liked, setLiked] = useState(initialLiked);
 
   const handleLikeClick = () => {
@@ -16,8 +16,9 @@ const Post = ({ name, title, text, postDayOrTime, initialLiked, likeAmount }) =>
   return (
     <div className='row border mx-auto post mb-5'>
       <div className="post-content-container">
+        {id != 'self' && (
         <div className="post-header">
-          <Link href={`/profile/${name}`} className="post-user-link">
+          <Link href={`/profile/${id}`} className="post-user-link">
             <div className="post-avatar-wrapper">
               <Image src="/avatar.svg" alt="avatar" width={36} height={36} />
             </div>
@@ -25,7 +26,7 @@ const Post = ({ name, title, text, postDayOrTime, initialLiked, likeAmount }) =>
               <h2 className="post-user-name">{name}</h2>
             </div>
           </Link>
-        </div>
+        </div>)}
         <div className="post-content">
         <h2 className="post-user-title">{title}</h2>
           <p className="post-text">{text}</p>

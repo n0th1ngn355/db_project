@@ -20,11 +20,10 @@ const getAuthToken = () => {
 const Feed = () => {
   const [showModal, setShowModal] = useState(false);
   const [postsData, setPostsData] = useState([]);
-  const [recPostsData, setRecPostsData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [rec, setRec] = useState(false);
+
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     const authToken = getAuthToken(); // Замените эту функцию на ваш способ получения токена из куки
@@ -33,8 +32,8 @@ const Feed = () => {
     if (!authToken) {
       window.location.href = '/login';
     } else {
-      // Запрос на получение новостной ленты
-      fetch('http://localhost:8000/app/feed/', {
+      // Запрос на получение данных о профиле
+      fetch('http://localhost:8000/app/enrolled/', {
         method: 'GET',
         headers: {
           'Authorization': `Token ${authToken}`,
@@ -53,37 +52,7 @@ const Feed = () => {
           setLoading(false);
         })
         .catch(error => {
-          console.error('Произошла ошибка при получении постов:', error.message);
-        });
-
-        // запрос на получение всех постов
-        fetch('http://localhost:8000/app/posts/', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Token ${authToken}`,
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error(`Ошибка сети: ${response.status} ${response.statusText}`);
-          }
-        })
-        .then(data => {
-          function compare(a, b) {
-            if (a.liked <= b.liked) 
-              return 1;
-            else
-              return -1;
-          }          
-          data.sort(compare)
-          setRecPostsData(data);
-          setLoading(false);
-        })
-        .catch(error => {
-          console.error('Произошла ошибка при получении постов:', error.message);
+          console.error('Произошла ошибка при получении данных профиля:', error.message);
         });
     }
 
@@ -93,7 +62,7 @@ const Feed = () => {
     const authToken = getAuthToken(); // Предполагается, что у вас есть функция получения токена
 
     try {
-      const response = await fetch('http://localhost:8000/app/posts/', {
+      const response = await fetch('http://localhost:8000/app/courses/', {
         method: 'POST',
         headers: {
           'Authorization': `Token ${authToken}`,
@@ -101,8 +70,8 @@ const Feed = () => {
         },
         body: JSON.stringify({
           title: title,
-          content: content,
-          created_at: new Date().toISOString(), // Текущее время в формате ISO
+          description: description,
+          // created_at: new Date().toISOString(), // Текущее время в формате ISO
         }),
       });
 
@@ -135,24 +104,24 @@ const Feed = () => {
   return (
     <div className="container mt-5">
       <div className='row h-100'>
-        <Sidebar info="feed" />
+        <Sidebar info="courses" />
         <div className='col-6 mt-3'>
           <FeedSearch className='row' />
           <div className='row-1 my-3 searchPost-buttons'>
-            <FeedPostsTypeButton text="Отслеживаемые" onClick={()=>setRec(false)} pressed={!rec} />
-            <FeedPostsTypeButton text="Популярные" onClick={()=>setRec(true)} pressed={rec}/>
+            <FeedPostsTypeButton text="Отслеживаемые" pressed={true} />
+            <FeedPostsTypeButton text="Популярные" pressed={false} />
           </div>
           <div className='feed'>
             {loading ? (
               <p>Loading...</p>
             ) : (
-              (rec?recPostsData:postsData).map((post, index) => (
+              postsData.map((post, index) => (
                 <Post
                   key={index}
-                  id = {post.posted}
-                  name={`${post.title} (id Автора: ${post.posted})`}
-                  text={post.content}
-                  postDayOrTime={post.created_at}
+                  id = {post.created_by}
+                  name={`${post.title} (id Автора: ${post.created_by})`}
+                  text={post.description}
+                  // postDayOrTime={post.created_at}
                   initialLiked={post.initialLiked}
                   likeAmount={post.liked}
                 />
@@ -161,7 +130,7 @@ const Feed = () => {
           </div>
         </div>
         <div className='col mt-3'>
-          <CreatePostButton onClick={openModal} text="Создать пост"></CreatePostButton>
+          <CreatePostButton onClick={openModal} text="Создать курс"></CreatePostButton>
           <div className="row-1 my-3 recommendations-title-wrapper">
             <p className='recommendations-title'>Рекомендации</p>
           </div>
@@ -180,7 +149,7 @@ const Feed = () => {
             <div className="FeedCreatePostWindow-content">
               <div className="FeedCreatePostWindow-header">
                 <div className="FeedCreatePostWindow-header-title-wrapper">
-                  <h2 className="FeedCreatePostWindow-header-title">Создать пост</h2>
+                  <h2 className="FeedCreatePostWindow-header-title">Создать курс</h2>
                 </div>
                 <div className="FeedCreatePostWindow-header-close">
                   <button onClick={closeModal} className="FeedCreatePostWindow-header-close-button">
@@ -202,8 +171,8 @@ const Feed = () => {
                   className="FeedCreatePostWindow-input"
                   id="FeedCreatePostWindow-input"
                   placeholder="Введите описание"
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
               </div>
               <div className="FeedCreatePostWindow-submit-button-wrapper">

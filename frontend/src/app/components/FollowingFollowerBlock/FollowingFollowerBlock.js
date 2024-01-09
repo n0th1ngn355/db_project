@@ -2,11 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import './FollowingFollowerBlock.css';
 
-const FollowingFollowerBlock = ({ type, name, desc }) => {
+const FollowingFollowerBlock = ({ type, id, name, update, desc, isFollow, follow, unfollow }) => {
     return (
         <>
             <div className="followBlock-container">
-                <Link className="followBlock-link" href={`/profile/${name}`}>
+                <Link className="followBlock-link" href={`/profile/${id}`}>
                     <div className="followBlock-content">
                         <div className="followBlock-avatar-wrapper">
                             <Image src="/avatar.svg" alt="avatar" width={52} height={52} />
@@ -29,11 +29,18 @@ const FollowingFollowerBlock = ({ type, name, desc }) => {
                         </div>
                     </div>
                 </Link>
+                {type === 'follower' && !isFollow && (
+                      <div className="followBlock-button-wrapper">
+                          <button className="followBlock-button" onClick={()=>{follow(id); update(true, id)}}>
+                              <Image src="/addfollow.svg" alt="addfollow" width={24} height={24}/>
+                          </button>
+                    </div>
+                )}
                 {type === 'following' && (
-                    <div className="followBlock-button-wrapper">
-                        <>
-                            
-                        </>
+                      <div className="followBlock-button-wrapper">
+                          <button className="followBlock-button" onClick={()=>{unfollow(id); update(false, id)}}>
+                              <Image src="/unfollow.svg" alt="unfollow" width={24} height={24}/>
+                          </button>
                     </div>
                 )}
             </div>

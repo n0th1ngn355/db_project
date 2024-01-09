@@ -12,10 +12,11 @@ const Sidebar = ({ info }) => {
                 alt="Profile Image"
                 style={{ width: '100%', maxWidth: '200px', borderRadius: '50%' }}
             />
-            <SidebarBlock info={info} href="feed" title="Новости" image="/feed.svg" />
-            <SidebarBlock info={info} href="follows" title="Подписки" image="/follows.svg" />
-            <SidebarBlock info={info} href="messages" title="Сообщения" image="/messages.svg" />
-            <SidebarBlock info={info} href="profile" title="Мой профиль" image="/profile.svg" />
+            <SidebarBlock info={info} href="/feed" title="Новости" image="/feed.svg" />
+            <SidebarBlock info={info} href="/follows" title="Подписки" image="/follows.svg" />
+            <SidebarBlock info={info} href="/courses" title="Курсы" image="/course.svg" />
+            <SidebarBlock info={info} href="/messages" title="Сообщения" image="/messages.svg" />
+            <SidebarBlock info={info} href="/profile" title="Мой профиль" image="/profile.svg" />
             <FollowingBlock/>
             <SettingsBlock/>
         </div>
