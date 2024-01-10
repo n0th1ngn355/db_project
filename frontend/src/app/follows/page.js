@@ -7,6 +7,7 @@ import FollowsSearch from "@/app/components/FollowsSearch/FollowsSearch";
 import FollowingFollowerBlock from "@/app/components/FollowingFollowerBlock/FollowingFollowerBlock";
 import { useEffect, useState } from 'react';
 import Image from "next/image";
+import Loader from "@/app/components/Loader/Loader";
 
 
 const getAuthToken = () => {
@@ -189,13 +190,13 @@ export default function Follows() {
                                 <div className="search-wrapper">
                                     <div className='d-flex justify-content-between align-items-center m-2'>
                                         <h1 className="title-style">Ваши подписки</h1>
-                                        <CreatePostButton onClick={openModal} text="Найти"></CreatePostButton>
+                                        <CreatePostButton style={{height: "35px", width: "150px"}} onClick={openModal} text="Найти"></CreatePostButton>
                                     </div>
                                     <FollowsSearch></FollowsSearch>
                                 </div>
                                 <div className="followings-list">
                                     {loading ? (
-                                        <p>Loading...</p>
+                                        <Loader/>
                                     ) : (
                                         followingData.map((follower, index) => (
                                             <FollowingFollowerBlock
@@ -221,7 +222,7 @@ export default function Follows() {
                                 </div>
                                 <div className="followers-list">
                                     {loading ? (
-                                        <p>Loading...</p>
+                                        <Loader/>
                                     ) : (
                                         followersData.map((follower, index) => (
                                             <FollowingFollowerBlock
@@ -255,7 +256,7 @@ export default function Follows() {
                   </button>
                 </div>
               </div>
-                <div className="followers-list">
+                <div className="followers-list" style={{padding: "15px",}}>
                 {loading ? (<p>Loading...</p>) : (
                     Object.values(usersDict).map((follower, index) => (
                     <FollowingFollowerBlock

@@ -7,6 +7,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './profile.css';
 import SkillsBlock from '../components/SkillsBlock/SkillsBlock';
 import Post from '../components/Post/Post';
+import Loader from '@/app/components/Loader/Loader';
+import button from "bootstrap/js/src/button";
 
 const getAuthToken = () => {
   return document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
@@ -223,8 +225,13 @@ const take = async (id) => {
                 <Image src="/avatar.svg" alt="Avatar" width={100} height={100} />
               </div>
               <div className="col">
-                <div className='row'>
-                  <h2 className="name_block col-6">{loading ? 'Loading...' : profileData.name} <a href='' style={{fontSize:'20px'}} onClick={logout}>Выйти</a></h2>
+                <div className='profile-header'>
+                  <h2 className="name_block">{loading ? 'Loading...' : profileData.name}</h2>
+                  {!loading ? (
+                    <button className="exit-profile-button" onClick={logout}>
+                      <Image src="/logout.svg" alt="logout" width={25} height={25}/>
+                    </button>
+                  ) : null}
                 </div>
                 <div className="d-flex">
                   <label className="num_follow">{loading ? '0' : (profileData.followers || '0')}</label>
@@ -234,15 +241,19 @@ const take = async (id) => {
                 </div>
                 <div className='mt-3 col description'>
                   Навыки: {loading ? 'Loading...' : mySkills.map((x)=>x.name).join(', ')}
+                  {!loading ? (
+                    <button className="change-skills-button" onClick={openModal}>
+                      <Image src="/edit.svg" alt="logout" width={24} height={25}/>
+                    </button>
+                  ) : null}
                 </div>
-                  <a href='javascript:;' onClick={openModal}> Изменить</a>
               </div>
             </div>
             <hr className='my-4' />
           </div>
           <div className='feed'>
             {loading ? (
-              <p>Loading...</p>
+              <Loader/>
             ) : (
               mypostsData.map((post, index) => (
                 <Post
@@ -274,19 +285,21 @@ const take = async (id) => {
                   </button>
                 </div>
               </div>
-                <div className="followers-list">
-                {loading ? (<p>Loading...</p>) : (
-                    Object.values(skills).map((sk, index) => (
-                    <SkillsBlock
-                        key={index}
-                        take={take}
-                        untake={untake}
-                        update={update}
-                        has={mySkills.filter((s)=> s.skill_id == sk.skill_id).length != 0}
-                        id={sk.skill_id}
-                        name={sk.name}
-                        />
-                        )))}
+                <div className="followers-list" style={{padding: "15px",}}>
+                {loading ? (
+                  <Loader/>
+                ) : (
+                  Object.values(skills).map((sk, index) => (
+                  <SkillsBlock
+                    key={index}
+                    take={take}
+                    untake={untake}
+                    update={update}
+                    has={mySkills.filter((s)=> s.skill_id == sk.skill_id).length != 0}
+                    id={sk.skill_id}
+                    name={sk.name}
+                    />
+                    )))}
                 </div>
             </div>
           </div>

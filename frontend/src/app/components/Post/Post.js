@@ -1,23 +1,29 @@
 'use client'
-import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/css/bootstrap.css';
 import Image from "next/image";
 import './Post.css'
 import { useState } from "react";
 import Link from "next/link";
 import MessagesInput from '../MessagesInput/MessagesInput';
 import PostComment from "@/app/components/PostComment/PostComment";
+import PostTag from "@/app/components/PostTag/PostTag";
 
 const Post = ({ name, comments, id, title, text, postDayOrTime, initialLiked, likeAmount }) => {
   const [liked, setLiked] = useState(initialLiked);
+  const [commentsVisible, setCommentsVisible] = useState(false);
 
   const handleLikeClick = () => {
     setLiked(!liked);
   };
 
+  const toggleCommentsVisibility = () => {
+    setCommentsVisible(!commentsVisible);
+  };
+
   return (
     <>
       <div className="row border mx-auto mb-5 post-container">
-        <div className='post'>
+        <div className='post' style={!commentsVisible ? {paddingBottom: "38px"} : {}}>
           <div className="post-content-container">
             {id != 'self' && (
                 <div className="post-header">
@@ -35,35 +41,46 @@ const Post = ({ name, comments, id, title, text, postDayOrTime, initialLiked, li
               <p className="post-text">{text}</p>
               <p className="post-time">{postDayOrTime}</p>
             </div>
-            <div className="post-likeAndShare">
-              <button className="post-like-button" onClick={handleLikeClick}>
-                <Image src={liked ? "/likeLiked.svg" : "/like.svg"} alt="like" width={24} height={25}/>
-                <p className="post-like-amount">{likeAmount}</p>
-              </button>
-              <button className="post-comments-button">
-                <Image src="/comments.svg" alt="comment" width={24} height={25}/>
-                <p className="post-comments-title">Комментарии</p>
-              </button>
-              <button className="post-share-button">
-                <Image src="/share.svg" alt="share" width={24} height={25}/>
-                <p className="post-share-title">Поделиться</p>
-              </button>
+            {/* ОБЕРНУЛ В КНОПКИ В post-likeAndShare И ЗАТЕМ ДОБАВИЛ ТЕГИ И ОБЕРНУЛ В post-likeAndShare-wrapper
+                СТИЛИ ТОЖЕ ЧУТЬ-ЧУТЬ ПОМЕНЯЛИСЬ */}
+            <div className="post-likeAndShare-wrapper">
+              <div className="post-likeAndShare">
+                <button className="post-like-button" onClick={handleLikeClick}>
+                  <Image src={liked ? "/likeLiked.svg" : "/like.svg"} alt="like" width={24} height={25}/>
+                  <p className="post-like-amount">{likeAmount}</p>
+                </button>
+                <button className="post-comments-button" onClick={toggleCommentsVisibility}>
+                  <Image src="/comments.svg" alt="comment" width={24} height={25}/>
+                  <p className="post-comments-title">Комментарии</p>
+                </button>
+                <button className="post-share-button">
+                  <Image src="/share.svg" alt="share" width={24} height={25}/>
+                  <p className="post-share-title">Поделиться</p>
+                </button>
+              </div>
+              <div className="post-tags">
+                <PostTag tag="Java"/>
+                <PostTag tag="C++"/>
+                <PostTag tag="Python"/>
+              </div>
             </div>
           </div>
         </div>
-        <div className='post-comments'>
-          <div className="post-comments-list">
-            {comments.map((com, index) => (
-            <PostComment key={index} name={com.name} text={com.content} time={com.created_at}/>))
-            }
+        {commentsVisible && (
+          <div className='post-comments'>
+            <div className="post-comments-list">
+              {comments.map((com, index) => (
+              <PostComment key={index} name={com.name} text={com.content} time={com.created_at}/>))
+              }
+            </div>
+            <div className="post-comments-addComment">
+              <MessagesInput></MessagesInput>
+              <button className="post-comments-addComment-button">
+                <Image src="/addComment.svg" alt="addComment" width={24} height={24}/>
+              </button>
+            </div>
           </div>
-          <div className="post-comments-addComment">
-            <MessagesInput></MessagesInput>
-            <button className="post-comments-addComment-button">
-              <Image src="/addComment.svg" alt="addComment" width={24} height={24}/>
-            </button>
-          </div>
-        </div>
+        )}
       </div>
     </>
   );

@@ -1,0 +1,12 @@
+.post-tag {
+    height: 100%;
+    padding: 2px 5px;
+    border-radius: 4px;
+    background: #c7dcdd;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+}
+.post-tag:not(:first-child) {
+    margin-left: 9px;
+}

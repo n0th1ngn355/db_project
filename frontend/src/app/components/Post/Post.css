@@ -42,11 +42,16 @@
     color: #171A1FFF; /* neutral-900 */
     margin: 0;
 }
-.post-likeAndShare {
+.post-likeAndShare-wrapper {
     margin-top: 9px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+}
+.post-likeAndShare {
+    display: flex;
+    flex-direction: row;
 }
 .post-like-button, .post-share-button, .post-comments-button {
     display: flex;
@@ -105,6 +110,10 @@
     margin-bottom: 8px;
 }
 .post-comments-addComment {
+    display: flex;
+    flex-direction: row;
+}
+.post-tags {
     display: flex;
     flex-direction: row;
 }
