@@ -25,6 +25,29 @@
 }
 
 
+.tags-select {
+    width: 100%;
+    height: fit-content;
+    padding: 12px 13px;
+    border: 1px solid #9095a1;
+    border-radius: 4px;
+    -webkit-appearance: none; /* Для WebKit (Chrome, Safari) */
+    -moz-appearance: none;    /* Для Firefox */
+    appearance: none;         /* Общее свойство */
+    background: url('/customdropdownarrow.svg') no-repeat right center;
+    background-position: right 13px center; /* Замените 10px на ваш желаемый отступ в пикселях */
+}
+.tags-select:hover {
+    border-color: #6f7787;
+}
+.tags-select:focus {
+    border-color: #9095a1;
+    box-shadow: 0px 0px 0px 3px #e9eaec;
+    outline: none;
+    -moz-appearance: none;
+    transition: box-shadow 0.1s ease-in-out;
+}
+
 
 
 
@@ -53,7 +76,7 @@
     border: none;
     padding: 0;
 }
-.input-area,.input-text {
+.input-area,.input-text, .tags-select-area {
     padding: 11px 15px;
     display: flex;
     flex-direction: column;

@@ -210,6 +210,13 @@ const Feed = () => {
                   onChange={(e) => setContent(e.target.value)}
                 ></textarea>
               </div>
+              <div className="tags-select-area">
+                <label htmlFor="tags-select">Скиллы</label>
+                <select id="tags-select" className="tags-select">
+                  <option value="Java">Java</option>
+                  <option value="JavaScript">JavaScript</option>
+                </select>
+              </div>
               <div className="FeedCreatePostWindow-submit-button-wrapper">
                 <button className="FeedCreatePostWindow-submit-button" onClick={handleCreatePost}>
                   Создать
