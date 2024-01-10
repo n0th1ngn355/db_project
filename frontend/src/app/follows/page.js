@@ -18,7 +18,6 @@ export default function Follows() {
     const [showModal, setShowModal] = useState(false);
     const [followingData, setFollowingData] = useState([]);
     const [followersData, setFollowersData] = useState([]);
-    const [usersData, setUsersData] = useState([]);
     const [usersDict, setUsersDict] = useState({});// сделано для удобства
     const [loading, setLoading] = useState(true);
 
@@ -121,7 +120,6 @@ export default function Follows() {
                     }
                 })
                 .then(data => {
-                    setUsersData(data);
                     var t = {}
                     for (let i = 0; i < data.length; i++) {
                         t[data[i]['user_id']] = data[i];
@@ -259,7 +257,7 @@ export default function Follows() {
               </div>
                 <div className="followers-list">
                 {loading ? (<p>Loading...</p>) : (
-                    usersData.map((follower, index) => (
+                    Object.values(usersDict).map((follower, index) => (
                     <FollowingFollowerBlock
                         key={index}
                         type="follower"

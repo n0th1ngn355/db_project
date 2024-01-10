@@ -6,7 +6,7 @@ import FeedSearch from '../components/FeedSearch/FeedSearch';
 import CreatePostButton from '../components/CreatePostButton/CreatePostButton';
 import Image from "next/image";
 import Recomenendations from '@/app/components/PostRecommendation/PostRecommendation';
-import Post from '../components/Post/Post';
+import Course from '../components/Course/Course';
 import 'bootstrap/dist/css/bootstrap.css'
 import './feed.css'
 import FeedPostsTypeButton from "@/app/components/FeedPostsTypeButton/FeedPostsTypeButton";
@@ -19,11 +19,52 @@ const getAuthToken = () => {
 
 const Feed = () => {
   const [showModal, setShowModal] = useState(false);
-  const [postsData, setPostsData] = useState([]);
+  const [postsData, setPostsData] = useState({});
+  const [recPostsData, setRecPostsData] = useState({});
+  const [rec, setRec] = useState(false);
   const [loading, setLoading] = useState(true);
-
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+
+
+
+  const update = (flag, id)=>{
+    if (flag){
+        postsData[id] = recPostsData[id]
+        setPostsData(postsData)
+    }
+    // else{
+    //     setFollowingData(followingData.filter((user)=>user.user_id != id))
+    // }
+}
+const enroll = async (id, flag) => {
+  const authToken = getAuthToken(); // Предполагается, что у вас есть функция получения токена
+
+  try {
+    const response = await fetch('http://localhost:8000/app/enrolled/', {
+      method: flag?'POST':'DELETE',
+      headers: {
+        'Authorization': `Token ${authToken}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        course_id: id,
+        // created_at: new Date().toISOString(), // Текущее время в формате ISO
+      }),
+    });
+
+    if (response.ok) {
+      document.querySelector('.FeedCreatePostWindow-header-close-button').click();
+      // location.reload();
+      console.log('Успешно');
+          
+    } else {
+      throw new Error(`Ошибка сети: ${response.status} ${response.statusText}`);
+    }
+  } catch (error) {
+    console.error('Произошла ошибка работе с подпиской:', error.message);
+  }
+};
 
   useEffect(() => {
     const authToken = getAuthToken(); // Замените эту функцию на ваш способ получения токена из куки
@@ -32,7 +73,7 @@ const Feed = () => {
     if (!authToken) {
       window.location.href = '/login';
     } else {
-      // Запрос на получение данных о профиле
+      // Запрос на получение курсов
       fetch('http://localhost:8000/app/enrolled/', {
         method: 'GET',
         headers: {
@@ -48,11 +89,49 @@ const Feed = () => {
           }
         })
         .then(data => {
-          setPostsData(data);
+          var t = {}
+          for (let i = 0; i < data.length; i++) {
+            t[data[i]['course_id']] = data[i];
+          }
+          setPostsData(t);
           setLoading(false);
         })
         .catch(error => {
-          console.error('Произошла ошибка при получении данных профиля:', error.message);
+          console.error('Произошла ошибка при получении курсов:', error.message);
+        });
+
+        // запрос на получение всех курсов
+        fetch('http://localhost:8000/app/courses/', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Token ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error(`Ошибка сети: ${response.status} ${response.statusText}`);
+          }
+        })
+        .then(data => {
+          function compare(a, b) {
+            if (a.liked <= b.liked) 
+              return 1;
+            else
+              return -1;
+          }
+          data.sort(compare)
+          var t = {}
+          for (let i = 0; i < data.length; i++) {
+            t[data[i]['course_id']] = data[i];
+          }
+          setRecPostsData(t);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Произошла ошибка при получении курсов:', error.message);
         });
     }
 
@@ -108,19 +187,22 @@ const Feed = () => {
         <div className='col-6 mt-3'>
           <FeedSearch className='row' />
           <div className='row-1 my-3 searchPost-buttons'>
-            <FeedPostsTypeButton text="Отслеживаемые" pressed={true} />
-            <FeedPostsTypeButton text="Популярные" pressed={false} />
+            <FeedPostsTypeButton text="Отслеживаемые" onClick={()=>setRec(false)} pressed={!rec} />
+            <FeedPostsTypeButton text="Популярные" onClick={()=>setRec(true)} pressed={rec}/>
           </div>
           <div className='feed'>
             {loading ? (
               <p>Loading...</p>
             ) : (
-              postsData.map((post, index) => (
-                <Post
+              Object.values(rec?recPostsData:postsData).map((post, index) => (
+                <Course
                   key={index}
                   id = {post.created_by}
                   name={`${post.title} (id Автора: ${post.created_by})`}
                   text={post.description}
+                  enroll={enroll}
+                  update={update}
+                  enrolled={post.course_id in postsData}
                   // postDayOrTime={post.created_at}
                   initialLiked={post.initialLiked}
                   likeAmount={post.liked}
