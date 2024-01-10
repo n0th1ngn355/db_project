@@ -20,12 +20,26 @@ const getAuthToken = () => {
 
 const Feed = () => {
   const [showModal, setShowModal] = useState(false);
-  const [postsData, setPostsData] = useState([]);
-  const [recPostsData, setRecPostsData] = useState([]);
+  const [postsData, setPostsData] = useState({});
+  const [recPostsData, setRecPostsData] = useState({});
   const [loading, setLoading] = useState(true);
   const [rec, setRec] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+
+  const updateLike = (id, isLiked, likeCount)=>{
+    let temp = {...postsData}
+    let tempRec = {...recPostsData}
+    // console.log(recPostsData[id])
+    if (id in temp){
+      temp[id]['liked']=likeCount
+      temp[id]['isLiked']=isLiked?'True':'False'
+    }
+    tempRec[id]['liked']=likeCount
+    tempRec[id]['isLiked']=isLiked?'True':'False'
+    setPostsData(temp)
+    setRecPostsData(tempRec)
+}
 
   useEffect(() => {
     const authToken = getAuthToken(); // Замените эту функцию на ваш способ получения токена из куки
@@ -50,7 +64,11 @@ const Feed = () => {
           }
         })
         .then(data => {
-          setPostsData(data);
+          var t = {}
+          for (let i = 0; i < data.length; i++) {
+            t[data[i]['post_id']] = data[i];
+          }
+          setPostsData(t);
           setLoading(false);
         })
         .catch(error => {
@@ -78,9 +96,13 @@ const Feed = () => {
               return 1;
             else
               return -1;
-          }          
+          }
           data.sort(compare)
-          setRecPostsData(data);
+          var t = {}
+          for (let i = 0; i < data.length; i++) {
+            t[data[i]['post_id']] = data[i];
+          }
+          setRecPostsData(t);
           setLoading(false);
         })
         .catch(error => {
@@ -147,15 +169,17 @@ const Feed = () => {
             {loading ? (
               <Loader />
             ) : (
-              (rec?recPostsData:postsData).map((post, index) => (
+              Object.values(rec?recPostsData:postsData).map((post, index) => (
                 <Post
                   key={index}
-                  id = {post.posted}
+                  user_id = {post.posted}
+                  id={post.post_id}
                   name={`${post.title} (id Автора: ${post.posted})`}
+                  updateLike={updateLike}
                   text={post.content}
                   comments={post.comments}
                   postDayOrTime={post.created_at}
-                  initialLiked={post.initialLiked}
+                  initialLiked={post.isLiked=='True'}
                   likeAmount={post.liked}
                 />
               ))

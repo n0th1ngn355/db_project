@@ -1,10 +1,11 @@
+import { useState } from 'react';
 import './MessagesInput.css';
 
-const MessagesInput = () => {
+const MessagesInput = ({text, setText, placeholder}) => {
     return (
         <>
             <div className="message-input-wrapper">
-                <input type="text" className="message-input" placeholder="Введите сообщение..."/>
+                <input value={text} onChange={(e) => setText(e.target.value)} type="text" className="message-input" placeholder={placeholder || 'Введите сообщение...'}/>
             </div>
         </>
     );

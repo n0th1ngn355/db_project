@@ -37,6 +37,19 @@ const Feed = () => {
     // else{
     //     setFollowingData(followingData.filter((user)=>user.user_id != id))
     // }
+  }
+  const updateLike = (id, isLiked, likeCount)=>{
+      let temp = {...postsData}
+      let tempRec = {...recPostsData}
+      // console.log(recPostsData[id])
+      if (id in temp){
+        temp[id]['liked']=likeCount
+        temp[id]['isLiked']=isLiked?'True':'False'
+      }
+      tempRec[id]['liked']=likeCount
+      tempRec[id]['isLiked']=isLiked?'True':'False'
+      setPostsData(temp)
+      setRecPostsData(tempRec)
 }
 const enroll = async (id, flag) => {
   const authToken = getAuthToken(); // Предполагается, что у вас есть функция получения токена
@@ -202,11 +215,12 @@ const enroll = async (id, flag) => {
                   id = {post.course_id}
                   name={`${post.title} (id Автора: ${post.created_by})`}
                   text={post.description}
+                  comments={post.comments}
                   enroll={enroll}
+                  updateLike={updateLike}
                   update={update}
                   enrolled={post.course_id in postsData}
-                  // postDayOrTime={post.created_at}
-                  initialLiked={post.initialLiked}
+                  initialLiked={post.isLiked=='True'}
                   likeAmount={post.liked}
                 />
               ))

@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import './PostComment.css';
+import Link from "next/link";
 
-const PostComment = ({ text, time, name }) => {
+const PostComment = ({ text, time, name, user_id}) => {
     return (
         <>
             <div className="post-user-comment">
@@ -10,7 +11,9 @@ const PostComment = ({ text, time, name }) => {
                 </div>
                 <div className="post-user-comment-wrapper">
                     <div className="post-user-comment-content">
-                        <h2 className="post-user-comment-name">{name}</h2>
+                        <Link href={`/profile/${user_id}`} className="post-user-link">
+                            <h2 className="post-user-comment-name">{name}</h2>
+                        </Link>
                         <p className="post-user-comment-text">{text}</p>
                     </div>
                     <p className="post-user-comment-time">{time}</p>

@@ -88,6 +88,7 @@ class CommentSerializer(serializers.Serializer):
     content = serializers.CharField()
     created_at = serializers.DateTimeField()
     post_id = serializers.CharField(read_only=True)
+    course_id = serializers.CharField(read_only=True)
     def to_representation(self, instance):
         return {
             'comment_id': str(instance.comment_id),
@@ -97,13 +98,14 @@ class CommentSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         user = User.nodes.get(email=self.context['request'].user.username)
-        post = Post.nodes.get(post_id=validated_data['post_id'])
-        del validated_data['post_id']
-        print(validated_data)
-        comment = Comment(**validated_data)
-        comment.save()
-        user.commented.connect(comment)
-        comment.post.connect(post)
+        post_id = validated_data.get('post_id')
+        course_id = validated_data.get('course_id')
+        if post_id:
+            post = Post.nodes.get(post_id=post_id)
+            comment = user.pcommented.connect(post, validated_data)
+        else:
+            course = Course.nodes.get(course_id=course_id)
+            comment = user.ccommented.connect(course, validated_data)
         return comment
 
     def update(self, instance, validated_data):
@@ -122,6 +124,20 @@ class CourseSerializer(serializers.Serializer):
     # created_by = serializers.CharField(source='User.user_id')
 
     def to_representation(self, instance):
+        comments_data = []
+        print(self.context)
+        results, cols = db.cypher_query(f"""MATCH (node:Course)<-[rel:COMMENTED]-() 
+                WHERE node.course_id="{instance.course_id}" RETURN rel""")
+        for row in results:
+            comment = Comment.inflate(row[cols.index('rel')])
+            comment_data = {
+                'comment_id': str(comment.comment_id),
+                'content': comment.content,
+                'created_at': str(comment.created_at),
+                'user_id': str(comment.start_node().user_id),
+                'name': str(comment.start_node().name)
+            }
+            comments_data.append(comment_data)
         return {
             'course_id': str(instance.course_id),
             'title': instance.title,
@@ -130,7 +146,9 @@ class CourseSerializer(serializers.Serializer):
             'created_by': str(instance.created_by.single().user_id),
             'enrolled_users': str(len(instance.enrolled_users)),
             'completed_by': str(len(instance.completed_by)),
-            'liked': str(len(instance.liked))
+            'liked': str(len(instance.liked)),
+            'comments': comments_data,
+            'isLiked': str(User.nodes.get(email=self.context['request'].user.username).cliked.is_connected(instance))
         }
 
     def create(self, validated_data):
@@ -189,15 +207,18 @@ class PostSerializer(serializers.Serializer):
     # posted = serializers.CharField(source='User.user_id')
 
     def to_representation(self, instance):
-
         comments_data = []
-        for comment in instance.comments.all():
+        # print(instance)
+        results, cols = db.cypher_query(f"""MATCH (node:Post)<-[rel:COMMENTED]-() 
+        WHERE node.post_id="{instance.post_id}" RETURN rel""")
+        for row in results:
+            comment = Comment.inflate(row[cols.index('rel')])
             comment_data = {
                 'comment_id': str(comment.comment_id),
                 'content': comment.content,
-                'created_at': comment.created_at,
-                'user_id': str(comment.user.single().user_id),
-                'name': str(comment.user.single().name)
+                'created_at': str(comment.created_at),
+                'user_id': str(comment.start_node().user_id),
+                'name': str(comment.start_node().name)
             }
             comments_data.append(comment_data)
         return {
@@ -207,7 +228,8 @@ class PostSerializer(serializers.Serializer):
             'created_at': instance.created_at,
             'posted': str(instance.user.single().user_id),
             'liked': str(len(instance.liked)),
-            'comments': comments_data
+            'comments': comments_data,
+            'isLiked': str(User.nodes.get(email=self.context['request'].user.username).pliked.is_connected(instance))
         }
 
     def create(self, validated_data):

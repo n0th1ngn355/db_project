@@ -258,9 +258,11 @@ const take = async (id) => {
               mypostsData.map((post, index) => (
                 <Post
                   key={index}
-                  id = 'self'
+                  user_id = 'self'
+                  id = {post.post_id}
                   name={profileData.name}
                   title={post.title}
+                  comments={post.comments}
                   text={post.content}
                   postDayOrTime={post.created_at}
                   initialLiked={post.initialLiked}

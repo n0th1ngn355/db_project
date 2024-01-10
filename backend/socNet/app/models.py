@@ -1,9 +1,21 @@
 from django.db import models
-from neomodel import DateProperty, StructuredNode, StringProperty, RelationshipTo, RelationshipFrom, UniqueIdProperty, DateTimeProperty
+from neomodel import DateProperty, StructuredNode, StringProperty, RelationshipTo, RelationshipFrom, UniqueIdProperty, \
+    DateTimeProperty, StructuredRel
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
+class Comment(StructuredRel):
+    comment_id = UniqueIdProperty()
+    content = StringProperty(required=True)
+    created_at = DateTimeProperty(default_now=True)
+
+    # user = RelationshipFrom('User', 'COMMENTED')
+    #
+    # post = RelationshipTo('Post', 'COMMENT_ON')
+
+    def __str__(self):
+        return self.content
 
 class User(StructuredNode):
     user_id = UniqueIdProperty()
@@ -21,7 +33,8 @@ class User(StructuredNode):
     posted = RelationshipTo('Post', 'POSTED')
     pliked = RelationshipTo('Post', 'LIKED')
     cliked = RelationshipTo('Course', 'LIKED')
-    commented = RelationshipTo('Comment', 'COMMENTED')
+    pcommented = RelationshipTo('Post', 'COMMENTED', model=Comment)
+    ccommented = RelationshipTo('Course', 'COMMENTED', model=Comment)
     def __str__(self):
         return self.name
 
@@ -48,6 +61,7 @@ class Course(StructuredNode):
     completed_by = RelationshipFrom('User', 'COMPLETED')
     teaches = RelationshipTo('Skill', 'TEACHES')
     liked = RelationshipFrom('User', 'LIKED')
+    comments = RelationshipFrom('User', 'COMMENTED', model=Comment)
     def __str__(self):
         return self.title
 
@@ -71,20 +85,7 @@ class Post(StructuredNode):
     created_at = DateTimeProperty(default_now=True)
     user = RelationshipFrom(User, 'POSTED')
     liked = RelationshipFrom('User', 'LIKED')
-    comments = RelationshipFrom('Comment', 'COMMENT_ON')
+    comments = RelationshipFrom('User', 'COMMENTED', model=Comment)
 
     def __str__(self):
         return self.title
-
-
-class Comment(StructuredNode):
-    comment_id = UniqueIdProperty()
-    content = StringProperty(required=True)
-    created_at = DateTimeProperty(default_now=True)
-
-    user = RelationshipFrom('User', 'COMMENTED')
-
-    post = RelationshipTo('Post', 'COMMENT_ON')
-
-    def __str__(self):
-        return self.content

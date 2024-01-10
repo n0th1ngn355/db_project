@@ -156,7 +156,9 @@ const MainLayout = ({params}) => {
                 <Post
                   key={index}
                   name={profileData.name}
-                  id = 'self'
+                  user_id = 'self'
+                  id = {post.post_id}
+                  comments={post.comments}
                   title={post.title}
                   text={post.content}
                   postDayOrTime={post.created_at}

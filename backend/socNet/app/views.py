@@ -49,7 +49,7 @@ class MyPosts(APIView):
             else:
                 user = User.nodes.get(email=request.user.username)
             posts = user.posted
-            serializer = PostSerializer(posts, many=True)
+            serializer = PostSerializer(posts, many=True, context={'request':request})
             return Response(serializer.data)
         except User.DoesNotExist:
             return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
@@ -158,7 +158,7 @@ class EnrolledCourses(APIView):
         try:
             user = User.nodes.get(email=request.user.username)
             courses = user.enrolled_in.all()
-            serializer = CourseSerializer(courses, many=True)
+            serializer = CourseSerializer(courses, many=True, context={'request':request})
             return Response(serializer.data)
         except User.DoesNotExist:
             return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
@@ -257,7 +257,7 @@ class Feed(APIView):
             posts = []
             for f in follows:
                 posts.extend(f.posted.all())
-            serializer = PostSerializer(posts, many=True)
+            serializer = PostSerializer(posts, many=True, context={'request':request})
             return Response(serializer.data)
         except User.DoesNotExist:
             return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
@@ -522,10 +522,22 @@ class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
 
     def get_queryset(self):
-        return Comment.nodes.all()
+        results, cols = db.cypher_query(f"""MATCH (node)<-[rel:COMMENTED]-()
+                                                                RETURN rel""")
+        res = []
+        for row in results:
+            rel = Comment.inflate(row[cols.index('rel')])
+            res.append(rel)
+        return res
+
 
     def perform_create(self, serializer):
-        serializer.save(post_id=self.request.data['post_id'])
+        post_id = self.request.data.get('post_id')
+        course_id = self.request.data.get('course_id')
+        if post_id:
+            serializer.save(post_id=post_id)
+        else:
+            serializer.save(course_id=course_id)
 
     def update(self, request, *args, **kwargs):
         instance = Comment.nodes.get(comment_id=kwargs.get('pk'))

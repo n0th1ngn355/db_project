@@ -21,9 +21,9 @@ CREATE (resource2:Resource {resource_id: '2', name: 'Ресурс 2', url: 'http
 CREATE (resource3:Resource {resource_id: '3', name: 'Ресурс 3', url: 'http://example.com/resource3'})
 
 // Создание постов
-CREATE (post1:Post {post_id: '1', title: 'Заголовок поста 1', content: 'Содержание поста 1'})
-CREATE (post2:Post {post_id: '2', title: 'Заголовок поста 2', content: 'Содержание поста 2'})
-CREATE (post3:Post {post_id: '3', title: 'Заголовок поста 3', content: 'Содержание поста 3'})
+CREATE (post1:Post {post_id: '1', title: 'Заголовок поста 1', content: 'Содержание поста 1', created_at: datetime().epochSeconds})
+CREATE (post2:Post {post_id: '2', title: 'Заголовок поста 2', content: 'Содержание поста 2', created_at: datetime().epochSeconds})
+CREATE (post3:Post {post_id: '3', title: 'Заголовок поста 3', content: 'Содержание поста 3', created_at: datetime().epochSeconds})
 
 
 CREATE (user1)-[:FOLLOWS]->(user2)
@@ -42,3 +42,4 @@ CREATE (user1)-[:POSTED]->(post1)
 CREATE (user2)-[:POSTED]->(post2)
 CREATE (user2)-[:POSTED]->(post3)
 CREATE (user1)-[:LIKED]->(post2)
+CREATE (user2)-[:COMMENTED {comment_id:'1', content:'Полностью согласен', created_at: datetime().epochSeconds}]->(post1)
