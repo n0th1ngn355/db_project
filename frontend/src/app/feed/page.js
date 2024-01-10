@@ -152,6 +152,7 @@ const Feed = () => {
                   id = {post.posted}
                   name={`${post.title} (id Автора: ${post.posted})`}
                   text={post.content}
+                  comments={post.comments}
                   postDayOrTime={post.created_at}
                   initialLiked={post.initialLiked}
                   likeAmount={post.liked}

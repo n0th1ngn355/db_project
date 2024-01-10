@@ -2,23 +2,25 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import Image from "next/image";
 import './Course.css'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import MessagesInput from '../MessagesInput/MessagesInput';
 
-const Course = ({ name, id, update, enrolled, enroll, title, text, postDayOrTime, initialLiked, likeAmount }) => {
+const Course = ({ name, id, created_id, update, enrolled, enroll, title, text, postDayOrTime, initialLiked, likeAmount }) => {
   const [liked, setLiked] = useState(initialLiked);
   const [isEnroll, setIsEnroll] = useState(enrolled)
   const handleLikeClick = () => {
     setLiked(!liked);
   };
-
+  useEffect(() => {
+    setIsEnroll(enrolled)
+  },[enrolled]);
   return (
     <div className='row border mx-auto post mb-5'>
       <div className="post-content-container">
-        {id != 'self' && (
+        {created_id != 'self' && (
         <div className="post-header d-flex justify-content-between align-items-center">
-          <Link href={`/profile/${id}`} className="post-user-link">
+          <Link href={`/profile/${created_id}`} className="post-user-link">
             <div className="post-avatar-wrapper">
               <Image src="/avatar.svg" alt="avatar" width={36} height={36} />
             </div>
@@ -28,7 +30,7 @@ const Course = ({ name, id, update, enrolled, enroll, title, text, postDayOrTime
           </Link>
           {!isEnroll && (
           <div className="followBlock-button-wrapper">
-            <button className="followBlock-button" onClick={() => { enroll(id, true); setIsEnroll(true); update(id, true)}}>
+            <button className="followBlock-button" onClick={() => { update(id, true); enroll(id, true); setIsEnroll(true);}}>
               Записаться
             </button>
           </div>

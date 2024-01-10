@@ -27,11 +27,12 @@ const Feed = () => {
   const [description, setDescription] = useState('');
 
 
-
-  const update = (flag, id)=>{
+  const update = (id, flag)=>{
     if (flag){
-        postsData[id] = recPostsData[id]
-        setPostsData(postsData)
+      let temp = {...postsData}
+      // console.log(recPostsData[id])
+      temp[id] = recPostsData[id]
+      setPostsData(temp)
     }
     // else{
     //     setFollowingData(followingData.filter((user)=>user.user_id != id))
@@ -197,7 +198,8 @@ const enroll = async (id, flag) => {
               Object.values(rec?recPostsData:postsData).map((post, index) => (
                 <Course
                   key={index}
-                  id = {post.created_by}
+                  created_id = {post.created_by}
+                  id = {post.course_id}
                   name={`${post.title} (id Автора: ${post.created_by})`}
                   text={post.description}
                   enroll={enroll}

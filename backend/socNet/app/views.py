@@ -12,10 +12,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from neomodel import db
 from rest_framework.views import APIView
-from .models import User, Skill, Course, Resource, Post
+from .models import *
 from django.contrib.auth.models import User as User1
 
-from .serializers import UserSerializer,  SkillSerializer, CourseSerializer, ResourceSerializer, PostSerializer
+from .serializers import UserSerializer, CommentSerializer, SkillSerializer, CourseSerializer, ResourceSerializer, PostSerializer
 
 def get_followers(user_instance):
     query = f"MATCH (follower:User)-[:FOLLOWS]->(:User {{user_id: '{user_instance.user_id}'}}) RETURN follower"
@@ -162,7 +162,33 @@ class EnrolledCourses(APIView):
             return Response(serializer.data)
         except User.DoesNotExist:
             return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+    def post(self, request, *args, **kwargs):
+        try:
+            course = Course.nodes.get(course_id=request.data.get('course_id'))
 
+            user = User.nodes.get(email=request.user.username)
+            if not user.enrolled_in.is_connected(course):
+                user.enrolled_in.connect(course)
+                return Response({"detail": f"You are now enrolled in {course.title}."},
+                                status=status.HTTP_201_CREATED)
+            else:
+                return Response({"detail": "Error"}, status=status.HTTP_400_BAD_REQUEST)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            course = Course.nodes.get(course_id=request.data.get('course_id'))
+
+            user = User.nodes.get(email=request.user.username)
+            if user.enrolled_in.is_connected(course):
+                user.enrolled_in.disconnect(course)
+                return Response({"detail": f"You are now not enrolled in {course.title}."},
+                                status=status.HTTP_201_CREATED)
+            else:
+                return Response({"detail": "Error"}, status=status.HTTP_400_BAD_REQUEST)
+        except User.DoesNotExist:
+            return Response({"detail": "User not found."}, status=status.HTTP_404_NOT_FOUND)
 
 class FollowersViewSet(APIView):
     permission_classes = [IsAuthenticated]
@@ -490,3 +516,34 @@ class PostViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         except Post.DoesNotExist:
             return Response({"detail": "Post not found."}, status=status.HTTP_404_NOT_FOUND)
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        return Comment.nodes.all()
+
+    def perform_create(self, serializer):
+        serializer.save(post_id=self.request.data['post_id'])
+
+    def update(self, request, *args, **kwargs):
+        instance = Comment.nodes.get(comment_id=kwargs.get('pk'))
+        serializer = self.serializer_class(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = Comment.nodes.get(comment_id=kwargs.get('pk'))
+        instance.delete()
+        return Response(data='delete success')
+
+    def retrieve(self, request, *args, **kwargs):
+        try:
+            post_id = kwargs.get('pk')
+            instance = Comment.nodes.get(comment_id=post_id)
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        except Comment.DoesNotExist:
+            return Response({"detail": "Comment not found."}, status=status.HTTP_404_NOT_FOUND)

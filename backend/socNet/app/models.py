@@ -21,6 +21,7 @@ class User(StructuredNode):
     posted = RelationshipTo('Post', 'POSTED')
     pliked = RelationshipTo('Post', 'LIKED')
     cliked = RelationshipTo('Course', 'LIKED')
+    commented = RelationshipTo('Comment', 'COMMENTED')
     def __str__(self):
         return self.name
 
@@ -70,6 +71,20 @@ class Post(StructuredNode):
     created_at = DateTimeProperty(default_now=True)
     user = RelationshipFrom(User, 'POSTED')
     liked = RelationshipFrom('User', 'LIKED')
+    comments = RelationshipFrom('Comment', 'COMMENT_ON')
 
     def __str__(self):
-        return self.name
+        return self.title
+
+
+class Comment(StructuredNode):
+    comment_id = UniqueIdProperty()
+    content = StringProperty(required=True)
+    created_at = DateTimeProperty(default_now=True)
+
+    user = RelationshipFrom('User', 'COMMENTED')
+
+    post = RelationshipTo('Post', 'COMMENT_ON')
+
+    def __str__(self):
+        return self.content

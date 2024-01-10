@@ -1,7 +1,7 @@
 # serializers.py
 
 from rest_framework import serializers
-from .models import User, Skill, Course, Resource, Post
+from .models import *
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User as User1
 
@@ -83,6 +83,38 @@ class SkillSerializer(serializers.Serializer):
         instance.delete()
 
 
+class CommentSerializer(serializers.Serializer):
+    comment_id = serializers.CharField(read_only=True)
+    content = serializers.CharField()
+    created_at = serializers.DateTimeField()
+    post_id = serializers.CharField(read_only=True)
+    def to_representation(self, instance):
+        return {
+            'comment_id': str(instance.comment_id),
+            'content': instance.content,
+            'created_at': instance.created_at
+        }
+
+    def create(self, validated_data):
+        user = User.nodes.get(email=self.context['request'].user.username)
+        post = Post.nodes.get(post_id=validated_data['post_id'])
+        del validated_data['post_id']
+        print(validated_data)
+        comment = Comment(**validated_data)
+        comment.save()
+        user.commented.connect(comment)
+        comment.post.connect(post)
+        return comment
+
+    def update(self, instance, validated_data):
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+        instance.save()
+        return instance
+
+    def destroy(self, instance):
+        instance.delete()
+
 class CourseSerializer(serializers.Serializer):
     course_id = serializers.CharField(read_only=True)
     title = serializers.CharField()
@@ -157,13 +189,25 @@ class PostSerializer(serializers.Serializer):
     # posted = serializers.CharField(source='User.user_id')
 
     def to_representation(self, instance):
+
+        comments_data = []
+        for comment in instance.comments.all():
+            comment_data = {
+                'comment_id': str(comment.comment_id),
+                'content': comment.content,
+                'created_at': comment.created_at,
+                'user_id': str(comment.user.single().user_id),
+                'name': str(comment.user.single().name)
+            }
+            comments_data.append(comment_data)
         return {
             'post_id': str(instance.post_id),
             'title': instance.title,
             'content': instance.content,
             'created_at': instance.created_at,
             'posted': str(instance.user.single().user_id),
-            'liked': str(len(instance.liked))
+            'liked': str(len(instance.liked)),
+            'comments': comments_data
         }
 
     def create(self, validated_data):

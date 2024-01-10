@@ -7,7 +7,7 @@ import Link from "next/link";
 import MessagesInput from '../MessagesInput/MessagesInput';
 import PostComment from "@/app/components/PostComment/PostComment";
 
-const Post = ({ name, id, title, text, postDayOrTime, initialLiked, likeAmount }) => {
+const Post = ({ name, comments, id, title, text, postDayOrTime, initialLiked, likeAmount }) => {
   const [liked, setLiked] = useState(initialLiked);
 
   const handleLikeClick = () => {
@@ -53,8 +53,9 @@ const Post = ({ name, id, title, text, postDayOrTime, initialLiked, likeAmount }
         </div>
         <div className='post-comments'>
           <div className="post-comments-list">
-            <PostComment name="Биба Бобов" text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, voluptates." time="2 часа назад"/>
-            <PostComment name="Володя Гагулин" text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, voluptates." time="2 часа назад"/>
+            {comments.map((com, index) => (
+            <PostComment key={index} name={com.name} text={com.content} time={com.created_at}/>))
+            }
           </div>
           <div className="post-comments-addComment">
             <MessagesInput></MessagesInput>

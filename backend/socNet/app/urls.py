@@ -11,6 +11,7 @@ router.register(r'skills', SkillViewSet, basename='skill')
 router.register(r'courses', CourseViewSet, basename='course')
 router.register(r'resources', ResourceViewSet, basename='resource')
 router.register(r'posts', PostViewSet, basename='post')
+router.register(r'comments', CommentViewSet, basename='comment')
 
 urlpatterns = [
     path('', include(router.urls)),
